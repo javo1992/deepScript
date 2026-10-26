@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>EDISON JAVIER FARINANGO CABEZAS</razonSocial>
+    <nombreComercial>EDISON JAVIER FARINANGO CABEZAS</nombreComercial>
+    <ruc>1722214507001</ruc>
+    <claveAcceso>2301202501172221450700110010010000000351234567815</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>001</ptoEmi>
+    <secuencial>000000035</secuencial>
+    <dirMatriz>COLINAS DEL VALLES JIPIRO Y SANTA BARBARA</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>23/01/2025</fechaEmision>
+    <dirEstablecimiento>KILOMETRO 14 Y MEDIO VIA CONOPCOTO</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionComprador>07</tipoIdentificacionComprador>
+    <razonSocialComprador>CONSUMIDOR FINAL</razonSocialComprador>
+    <identificacionComprador>9999999999999</identificacionComprador>
+    <totalSinImpuestos>2.3</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>0</codigoPorcentaje>
+        <descuentoAdicional>0</descuentoAdicional>
+        <baseImponible>2.30</baseImponible>
+        <valor>0.00</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>2.30</importeTotal>
+    <moneda>DOLAR</moneda>
+    <pagos>
+      <pago>
+        <formaPago>01</formaPago>
+        <total>2.30</total>
+      </pago>
+    </pagos>
+  </infoFactura>
+  <detalles>
+    <detalle>
+      <codigoPrincipal>01.01.007</codigoPrincipal>
+      <descripcion>prueba</descripcion>
+      <unidadMedida>DOLAR</unidadMedida>
+      <cantidad>1</cantidad>
+      <precioUnitario>2.300000</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>2.30</precioTotalSinImpuesto>
+      <detallesAdicionales>
+        <detAdicional nombre="Serie_No" valor="001-001"/>
+      </detallesAdicionales>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>0</codigoPorcentaje>
+          <tarifa>0</tarifa>
+          <baseImponible>2.30</baseImponible>
+          <valor>0.00</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">KILOMETRO 14 Y MEDIO VIA CONOPCOTO</campoAdicional>
+    <campoAdicional nombre="Telefono">987463251</campoAdicional>
+    <campoAdicional nombre="Email">EXAMPLE@EXAMPLE.COM</campoAdicional>
+    <campoAdicional nombre="Email2">EXAMPLE@EXAMPLE.COM</campoAdicional>
+    <campoAdicional nombre="Referencia">99999999</campoAdicional>
+  </infoAdicional>
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature703230">
+<ds:SignedInfo Id="Signature-SignedInfo375542">
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<ds:Reference Id="SignedPropertiesID439910" Type="http://uri.etsi.org/01903#SignedProperties" URI="#Signature703230-SignedProperties367844">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>HiIO2EYz/Ip7m1pj/A5s303zsFs=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference URI="#Certificate11034025">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>fUGvczqmpWSLR1VWwWnBXnxdipI=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference Id="Reference-ID-469398" URI="#comprobante">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>axdaehoLNtZkgNujezxeODtjZXw=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue Id="SignatureValue118011">
+TTCTwP7MT2UgWl2b4w1eee3hFCG1+JX+8hOjFGbW9OWayW62hIqjIWVO3X/6ZdC0elkiAtTGVecX
+VD0Ivgwka7F5k3MUa5tCwwEt8yatZ71QWI/FgSxSxXqWEdKI+fegk4zxy17pSv4/FOnziNjRgjLQ
+bMvX4O+l1Ko6WryY80BAJ2n9eOvZNw3Rq7WSoqPJebrqu3/9AFvadFZ6kvKaWbVZ1i+HbjqWXWqI
+4XiAKlradlx4B6qCWq+Z/knUYeO9CMoqwCgwcl8J+CfwYiFidtc5c7wPDyi8JJlaCedc/IQo3NYs
+CxThRJ/87dcumTwyScq4sZ5FQcuDd7RQJczQ2g==
+</ds:SignatureValue>
+<ds:KeyInfo Id="Certificate11034025">
+<ds:X509Data>
+<ds:X509Certificate>
+MIIHxjCCBa6gAwIBAgIRAMlbQMKbEDKywaVcF9YzgNgwDQYJKoZIhvcNAQELBQAwgcIxCzAJBgNV
+BAYTAkVDMRswGQYDVQQKDBJGSVJNQVNFR1VSQSBTLkEuUy4xMDAuBgNVBAsMJ0VOVElEQUQgREUg
+Q0VSVElGSUNBQ0lPTiBERSBJTkZPUk1BQ0lPTjETMBEGA1UECAwKVFVOR1VSQUhVQTE+MDwGA1UE
+Aww1QVVUT1JJREFEIERFIENFUlRJRklDQUNJT04gU1VCQ0EtMSBGSVJNQVNFR1VSQSBTLkEuUy4x
+DzANBgNVBAcMBkFNQkFUTzAeFw0yNTAxMjAxNDE1MDlaFw0yNjAxMjAxNTE1MDhaMIHeMS0wKwYD
+VQQFEyQ1NjhiYzM3Ny01NWY2LTQ2OWMtYmI0Ny0wMTExMWJlOWE4ZmMxLDAqBgkqhkiG9w0BCQEW
+HW1hcmlhcm9kcmlndWV6YjE5ODBAZ21haWwuY29tMSMwIQYDVQQDExpBREFOWSBBTkRSRUlOQSBC
+RUNFUlJBIEdJTDEwMC4GA1UECxMnRU5USURBRCBERSBDRVJUSUZJQ0FDSU9OIERFIElORk9STUFD
+SU9OMRswGQYDVQQKExJGSVJNQVNFR1VSQSBTLkEuUy4xCzAJBgNVBAYTAkVDMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiNyrKCRJKmyxKv6YUh5FbyqpCSTgAOwTS/orqPFxSPrAMtbf
+Rk0twmFYGxe31lVYQYlirIV/xGcD6NwDMZJ714qdAwRn2dT2SDU8Jhi9FzMUkDK0LI1cjUkCRnge
+qJRh1ITnSu8jtlMiVD4uvZtYnSjwRwGuacrHkKuKqYkxy8pbedhB/wjJuO8qIQX8Xijfq1zmKufx
+NrYy4w9kUEhJ1PNl1rU3oxk2x5FXH7C9IbuTHrHx7VF77ODyATKLHsL5fXzkryCZ5kqIdqT8yFNv
+JZcHCMOUZ+NeXT/Kj7BmqYzLOqwnjlnjEXvAU/RjojtR5vkduhWv1HY1dlx4qFr3gwIDAQABo4IC
+lzCCApMwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBQTRpNoCa7XJIczRWMmd9+sXl6KUTAdBgNVHQ4E
+FgQUHhlL+plbrCzXRqD/xUE2eAMsT10wWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2NybC5maXJt
+YXNlZ3VyYWVjLmNvbS9jcmwvY2NjZTVhNGYtNmI2OC00NmZjLWE2MjAtNGFiY2M0YzRhNjkwLmNy
+bDA5BggrBgEFBQcBAQQtMCswKQYIKwYBBQUHMAGGHWh0dHA6Ly9vY3NwLmZpcm1hc2VndXJhZWMu
+Y29tMBoGCisGAQQBg955AwEEDBYKMTc2MjAyNTU0MDAeBgorBgEEAYPeeQMCBBAWDkFEQU5ZIEFO
+RFJFSU5BMBcGCisGAQQBg955AwMECRYHQkVDRVJSQTATBgorBgEEAYPeeQMEBAUWA0dJTDAtBgor
+BgEEAYPeeQMHBB8WHURJQUdPTkFMIEFMIFNVUEVSTUVSQ0FETyBUVVRJMBwGCisGAQQBg955AwgE
+DhYMNTkzOTgzMzExMTI0MBUGCisGAQQBg955AwkEBxYFUVVJVE8wEwYKKwYBBAGD3nkDDAQFFgNF
+Q1UwHQYKKwYBBAGD3nkDCwQPFg0xNzYyMDI1NTQwMDAxMIGcBgNVHSAEgZQwgZEwUAYLKwYBBAGD
+3nkCAQEwQTA/BggrBgEFBQcCARYzaHR0cHM6Ly9maXJtYXNlZ3VyYWVjLmNvbS9wb2xpdGljYXNf
+cGVyc29uYV9uYXR1cmFsMD0GCysGAQQBg955AgIBMC4wLAYIKwYBBQUHAgIwIAweQ2VydGlmaWNh
+ZG8gZGUgUGVyc29uYSBOYXR1cmFsMA4GA1UdDwEB/wQEAwIF4DANBgkqhkiG9w0BAQsFAAOCAgEA
+UbuZM6cVJsc2xOGvTxyDPAVxCKf/139q5879HnGP9iNgoIjt7lNnGBIBltUWzogRbd236CmUup6C
+g/2w4phv/v35DLjme0Guz3jpbG9q3EdDJD1yaVfEbJp0+w8Y15WOT4RtubAc2Ie6/HHhyG6Wvucb
+k5/6P61AG4DDqeCrttCPtkI2apKfEZw3gQYlilO6X3jF2yog3BCufODnOUu5oSJu9Gh5saEwBPMk
+ZIBMFxkmObSKdoCbfuNneOXmAHkecTZsEUxIFTgd7PGLKAJvJWhGX4GQzk0aTSFX1Nc7sa7eiQe2
+Q1IH3TgK5cWzpt3GEaJGWMx7c0YBp4PlvS7oONW4s57ZgV+a18F7hXEM4kI/nqcMcw+qXFXQX5oM
+QhT4+zoqeUjcgta0+ePxcsBPMvnKC0xUtc1RWV6x95G073LQ4shNfHyxNu2xaH96NXN+9FOjvP10
+6Kx5ZV0Abvr0ot3n/9SanBAiLZVQGyj8OOXuPp6NDMa14hvc5YIjeyGv64dZ2de9x9HxxeU1HDPd
++tsP83NaFJI6rMY5qSo4VcOBJwrSGY1sEeWWmSruOne3tOLzFXMySBBEJragv9F1330NHx2a7Riz
+nYvT8+rjUDI7mhVBXA5di6URE8+vENIDrUC8AdeZF8iWv2xNXuR2uYR1qx5q7dd/uD4XJD0qwMs=
+</ds:X509Certificate>
+</ds:X509Data>
+<ds:KeyValue>
+<ds:RSAKeyValue>
+<ds:Modulus>
+iNyrKCRJKmyxKv6YUh5FbyqpCSTgAOwTS/orqPFxSPrAMtbfRk0twmFYGxe31lVYQYlirIV/xGcD
+6NwDMZJ714qdAwRn2dT2SDU8Jhi9FzMUkDK0LI1cjUkCRngeqJRh1ITnSu8jtlMiVD4uvZtYnSjw
+RwGuacrHkKuKqYkxy8pbedhB/wjJuO8qIQX8Xijfq1zmKufxNrYy4w9kUEhJ1PNl1rU3oxk2x5FX
+H7C9IbuTHrHx7VF77ODyATKLHsL5fXzkryCZ5kqIdqT8yFNvJZcHCMOUZ+NeXT/Kj7BmqYzLOqwn
+jlnjEXvAU/RjojtR5vkduhWv1HY1dlx4qFr3gw==
+</ds:Modulus>
+<ds:Exponent>AQAB</ds:Exponent>
+</ds:RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+<ds:Object Id="Signature703230-Object362403"><etsi:QualifyingProperties Target="#Signature703230"><etsi:SignedProperties Id="Signature703230-SignedProperties367844"><etsi:SignedSignatureProperties><etsi:SigningTime>2025-01-26T11:06:46-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>dAWzoyIkz5Ta4Qn3/3M5fv0AMHc=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>L=AMBATO,CN=AUTORIDAD DE CERTIFICACION SUBCA-1 FIRMASEGURA S.A.S.,ST=TUNGURAHUA,OU=ENTIDAD DE CERTIFICACION DE INFORMACION,O=FIRMASEGURA S.A.S.,C=EC</ds:X509IssuerName><ds:X509SerialNumber>267648639659362679993270688653539246296</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-469398"><etsi:Description>contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<comprobanteRetencion id="comprobante" version="2.0.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>VACA PRIETO WALTER JALIL</razonSocial>
+    <nombreComercial>DISKCOVER SYSTEM</nombreComercial>
+    <ruc>0702164179001</ruc>
+    <claveAcceso>2603202307070216417900110010020000000311234567810</claveAcceso>
+    <codDoc>07</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000031</secuencial>
+    <dirMatriz>Desarrollo para programacion de DiskCover System</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoCompRetencion>
+    <fechaEmision>26/03/2023</fechaEmision>
+    <dirEstablecimiento>DESARROLLO PARA PROGRAMACION DE DISKCOVER SYSTEM</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionSujetoRetenido>04</tipoIdentificacionSujetoRetenido>
+    <parteRel>NO</parteRel>
+    <razonSocialSujetoRetenido>INDUSTRIA DE LACTEOS</razonSocialSujetoRetenido>
+    <identificacionSujetoRetenido>1478523691001</identificacionSujetoRetenido>
+    <periodoFiscal>03/2023</periodoFiscal>
+  </infoCompRetencion>
+  <docsSustento>
+    <docSustento>
+      <codSustento>01</codSustento>
+      <codDocSustento>01</codDocSustento>
+      <numDocSustento>001001000000001</numDocSustento>
+      <fechaEmisionDocSustento>25/03/2023</fechaEmisionDocSustento>
+      <fechaRegistroContable>25/03/2023</fechaRegistroContable>
+      <numAutDocSustento>0000000001</numAutDocSustento>
+      <pagoLocExt>01</pagoLocExt>
+      <totalSinImpuestos>120.00</totalSinImpuestos>
+      <importeTotal>120.00</importeTotal>
+      <impuestosDocSustento>
+        <impuestoDocSustento>
+          <codImpuestoDocSustento>2</codImpuestoDocSustento>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <baseImponible>0.00</baseImponible>
+          <tarifa>12</tarifa>
+          <valorImpuesto>0.00</valorImpuesto>
+        </impuestoDocSustento>
+        <impuestoDocSustento>
+          <codImpuestoDocSustento>2</codImpuestoDocSustento>
+          <codigoPorcentaje>0</codigoPorcentaje>
+          <baseImponible>120.00</baseImponible>
+          <tarifa>0</tarifa>
+          <valorImpuesto>0.00</valorImpuesto>
+        </impuestoDocSustento>
+      </impuestosDocSustento>
+      <retenciones>
+        <retencion>
+          <codigo>1</codigo>
+          <codigoRetencion>303</codigoRetencion>
+          <baseImponible>240.00</baseImponible>
+          <porcentajeRetener>10.00</porcentajeRetener>
+          <valorRetenido>24.00</valorRetenido>
+        </retencion>
+      </retenciones>
+      <pagos>
+        <pago>
+          <formaPago>01</formaPago>
+          <total>120</total>
+        </pago>
+      </pagos>
+    </docSustento>
+  </docsSustento>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">kilometro 6</campoAdicional>
+    <campoAdicional nombre="Telefono">12542541251</campoAdicional>
+    <campoAdicional nombre="Email">example@lacteos.com</campoAdicional>
+    <campoAdicional nombre="Comprobante No">CD-000000031</campoAdicional>
+  </infoAdicional>
+</comprobanteRetencion>

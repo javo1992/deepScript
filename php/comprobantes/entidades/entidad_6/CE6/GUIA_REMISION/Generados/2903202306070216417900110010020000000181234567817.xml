@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<guiaRemision id="comprobante" version="1.0.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>VACA PRIETO WALTER JALIL</razonSocial>
+    <nombreComercial>DISKCOVER SYSTEM</nombreComercial>
+    <ruc>0702164179001</ruc>
+    <claveAcceso>2903202306070216417900110010020000000181234567817</claveAcceso>
+    <codDoc>06</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000018</secuencial>
+    <dirMatriz>Desarrollo para programacion de DiskCover System</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoGuiaRemision>
+    <dirEstablecimiento>DESARROLLO PARA PROGRAMACION DE DISKCOVER SYSTEM</dirEstablecimiento>
+    <dirPartida>24 DE MAYO</dirPartida>
+    <razonSocialTransportista>Javier Farinango</razonSocialTransportista>
+    <tipoIdentificacionTransportista>05</tipoIdentificacionTransportista>
+    <rucTransportista>1722214507</rucTransportista>
+    <rise>000</rise>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <fechaIniTransporte>29/03/2023</fechaIniTransporte>
+    <fechaFinTransporte>29/03/2023</fechaFinTransporte>
+    <placa>XXX-999</placa>
+  </infoGuiaRemision>
+  <destinatarios>
+    <destinatario>
+      <identificacionDestinatario>1750188326</identificacionDestinatario>
+      <razonSocialDestinatario>Javier Farinango</razonSocialDestinatario>
+      <dirDestinatario>AMBATO</dirDestinatario>
+      <motivoTraslado>Translado de mercaderia</motivoTraslado>
+      <ruta>De 24 DE MAYO a AMBATO</ruta>
+      <codDocSustento>00</codDocSustento>
+      <numDocSustento>001-003-000000006</numDocSustento>
+      <numAutDocSustento>2903202301070216417900110010020000000091234567816</numAutDocSustento>
+      <fechaEmisionDocSustento>28/03/2023</fechaEmisionDocSustento>
+      <detalles>
+        <detalle>
+          <codigoInterno>10.23.25</codigoInterno>
+          <descripcion>servicio de trasporte</descripcion>
+          <cantidad>1</cantidad>
+        </detalle>
+      </detalles>
+    </destinatario>
+  </destinatarios>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">el dorado</campoAdicional>
+    <campoAdicional nombre="Email">example@example.com</campoAdicional>
+  </infoAdicional>
+</guiaRemision>

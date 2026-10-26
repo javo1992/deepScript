@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>EDISON JAVIER FARINANGO CABEZAS</razonSocial>
+    <nombreComercial>EDISON JAVIER FARINANGO CABEZAS</nombreComercial>
+    <ruc>1722214507001</ruc>
+    <claveAcceso>2112202401172221450700110010010000000311234567811</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>001</ptoEmi>
+    <secuencial>000000031</secuencial>
+    <dirMatriz>COLINAS DEL VALLES JIPIRO Y SANTA BARBARA</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>21/12/2024</fechaEmision>
+    <dirEstablecimiento>consumidos final</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionComprador>06</tipoIdentificacionComprador>
+    <razonSocialComprador>CONSUMIDOR FINAL</razonSocialComprador>
+    <identificacionComprador>999999999999</identificacionComprador>
+    <totalSinImpuestos>4</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>0</codigoPorcentaje>
+        <descuentoAdicional>0</descuentoAdicional>
+        <baseImponible>2.00</baseImponible>
+        <valor>0.00</valor>
+      </totalImpuesto>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>4</codigoPorcentaje>
+        <descuentoAdicional>0.00</descuentoAdicional>
+        <baseImponible>2.00</baseImponible>
+        <tarifa>15.00</tarifa>
+        <valor>0.30</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>4.30</importeTotal>
+    <moneda>DOLAR</moneda>
+    <pagos>
+      <pago>
+        <formaPago>01</formaPago>
+        <total>4.30</total>
+      </pago>
+    </pagos>
+  </infoFactura>
+  <detalles>
+    <detalle>
+      <codigoPrincipal>01.01.006</codigoPrincipal>
+      <descripcion>mantenimiento</descripcion>
+      <unidadMedida>DOLAR</unidadMedida>
+      <cantidad>1</cantidad>
+      <precioUnitario>2.000000</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>2.00</precioTotalSinImpuesto>
+      <detallesAdicionales>
+        <detAdicional nombre="Serie_No" valor="001-001"/>
+      </detallesAdicionales>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>0</codigoPorcentaje>
+          <tarifa>0</tarifa>
+          <baseImponible>2.00</baseImponible>
+          <valor>0.00</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+    <detalle>
+      <codigoPrincipal>01.01.005</codigoPrincipal>
+      <descripcion>Desarrollo</descripcion>
+      <unidadMedida>DOLAR</unidadMedida>
+      <cantidad>1</cantidad>
+      <precioUnitario>2.000000</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>2.00</precioTotalSinImpuesto>
+      <detallesAdicionales>
+        <detAdicional nombre="Serie_No" valor="001-001"/>
+      </detallesAdicionales>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>4</codigoPorcentaje>
+          <tarifa>15.00</tarifa>
+          <baseImponible>2.00</baseImponible>
+          <valor>0.30</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+  <infoAdicional>
+    <campoAdicional nombre="Ubicacion">0</campoAdicional>
+    <campoAdicional nombre="Direccion">consumidos final</campoAdicional>
+    <campoAdicional nombre="Telefono">99999999</campoAdicional>
+    <campoAdicional nombre="Email">consumidos@final.com</campoAdicional>
+    <campoAdicional nombre="Email2">consumidos@final.com</campoAdicional>
+    <campoAdicional nombre="Referencia">99999999</campoAdicional>
+  </infoAdicional>
+</factura>

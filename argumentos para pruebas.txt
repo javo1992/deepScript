@@ -1,0 +1,17 @@
+============================ Comprobar si esta autorizada ===============================
+2
+1311202301172221450700110010010000000141234567813
+C:\xampp\htdocs\facturacion\php1\comprobantes\entidades\entidad_7\CE7\Autorizados
+C:\xampp\htdocs\facturacion\php1\comprobantes\entidades\entidad_7\CE7\No_autorizados
+https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl
+
+=====================enviar a autorizar ===============================================
+
+1
+1311202301172221450700110010010000000141234567813 
+C:\xampp\htdocs\facturacion\php1\comprobantes\entidades\entidad_7\CE7\FACTURAS\Firmados 
+C:\xampp\htdocs\facturacion\php1\comprobantes\entidades\entidad_7\CE7\FACTURAS\Enviados 
+C:\xampp\htdocs\facturacion\php1\comprobantes\entidades\entidad_7\CE7\FACTURAS\Rechazados 
+https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl
+
+=============================firmar docuemtno =======================================

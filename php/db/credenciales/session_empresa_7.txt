@@ -1,0 +1,6 @@
+root
+
+localhost
+facturacion_basica
+3306
+MYSQL

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>VACA PRIETO WALTER JALIL</razonSocial>
+    <nombreComercial>DISKCOVER SYSTEM</nombreComercial>
+    <ruc>0702164179001</ruc>
+    <claveAcceso>2701202501070216417900110010020000000021234567815</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000002</secuencial>
+    <dirMatriz>Desarrollo para programacion de DiskCover System</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>27/01/2025</fechaEmision>
+    <dirEstablecimiento>consumidor final</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionComprador>06</tipoIdentificacionComprador>
+    <razonSocialComprador>CONSUMIDO FINAL</razonSocialComprador>
+    <identificacionComprador>9999999999</identificacionComprador>
+    <totalSinImpuestos>12</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>0</codigoPorcentaje>
+        <descuentoAdicional>0</descuentoAdicional>
+        <baseImponible>12.00</baseImponible>
+        <valor>0.00</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>12.00</importeTotal>
+    <moneda>DOLAR</moneda>
+    <pagos>
+      <pago>
+        <formaPago>01</formaPago>
+        <total>12.00</total>
+      </pago>
+    </pagos>
+  </infoFactura>
+  <detalles>
+    <detalle>
+      <codigoPrincipal>01.01.37</codigoPrincipal>
+      <descripcion>Pollo  1</descripcion>
+      <unidadMedida>DOLAR</unidadMedida>
+      <cantidad>1</cantidad>
+      <precioUnitario>12.000000</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>12.00</precioTotalSinImpuesto>
+      <detallesAdicionales>
+        <detAdicional nombre="Serie_No" valor="001-002"/>
+      </detallesAdicionales>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>0</codigoPorcentaje>
+          <tarifa>0</tarifa>
+          <baseImponible>12.00</baseImponible>
+          <valor>0.00</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">consumidor final</campoAdicional>
+    <campoAdicional nombre="Telefono">9999999999</campoAdicional>
+    <campoAdicional nombre="Email">javier.farianngo92@example.com</campoAdicional>
+    <campoAdicional nombre="Email2">javier.farianngo92@example.com</campoAdicional>
+    <campoAdicional nombre="Referencia">99999999</campoAdicional>
+  </infoAdicional>
+</factura>

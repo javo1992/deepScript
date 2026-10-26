@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<guiaRemision id="comprobante" version="1.0.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>VACA PRIETO WALTER JALIL</razonSocial>
+    <nombreComercial>DISKCOVER SYSTEM</nombreComercial>
+    <ruc>0702164179001</ruc>
+    <claveAcceso>2903202306070216417900110010020000000161234567816</claveAcceso>
+    <codDoc>06</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000016</secuencial>
+    <dirMatriz>Desarrollo para programacion de DiskCover System</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoGuiaRemision>
+    <dirEstablecimiento>DESARROLLO PARA PROGRAMACION DE DISKCOVER SYSTEM</dirEstablecimiento>
+    <dirPartida>24 DE MAYO</dirPartida>
+    <razonSocialTransportista>Javier Farinango</razonSocialTransportista>
+    <tipoIdentificacionTransportista>05</tipoIdentificacionTransportista>
+    <rucTransportista>1722214507</rucTransportista>
+    <rise>000</rise>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <fechaIniTransporte>29/03/2023</fechaIniTransporte>
+    <fechaFinTransporte>29/03/2023</fechaFinTransporte>
+    <placa>XXX-999</placa>
+  </infoGuiaRemision>
+  <destinatarios>
+    <destinatario>
+      <identificacionDestinatario>1750188326</identificacionDestinatario>
+      <razonSocialDestinatario>Javier Farinango</razonSocialDestinatario>
+      <dirDestinatario>AGUARICO</dirDestinatario>
+      <motivoTraslado>Translado de mercaderia</motivoTraslado>
+      <ruta>De 24 DE MAYO a AGUARICO</ruta>
+      <codDocSustento>00</codDocSustento>
+      <numDocSustento>001-002-000000018</numDocSustento>
+      <numAutDocSustento>2903202301070216417900110010020000000181234567815</numAutDocSustento>
+      <fechaEmisionDocSustento>29/03/2023</fechaEmisionDocSustento>
+      <detalles>
+        <detalle>
+          <codigoInterno>01.01.37</codigoInterno>
+          <descripcion>Pollo  1</descripcion>
+          <cantidad>1</cantidad>
+        </detalle>
+        <detalle>
+          <codigoInterno>10.23.25</codigoInterno>
+          <descripcion>servicio de trasporte</descripcion>
+          <cantidad>1</cantidad>
+        </detalle>
+      </detalles>
+    </destinatario>
+  </destinatarios>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">av  la prensa</campoAdicional>
+    <campoAdicional nombre="Telefono">0987456321</campoAdicional>
+    <campoAdicional nombre="Email">javier.farinango92@gmail.com</campoAdicional>
+  </infoAdicional>
+</guiaRemision>

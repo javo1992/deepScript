@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<notaCredito id="comprobante" version="1.0.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>VACA PRIETO WALTER JALIL</razonSocial>
+    <nombreComercial>DISKCOVER SYSTEM</nombreComercial>
+    <ruc>0702164179001</ruc>
+    <claveAcceso>2403202304070216417900110010020000000051234567810</claveAcceso>
+    <codDoc>04</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000005</secuencial>
+    <dirMatriz>Desarrollo para programacion de DiskCover System</dirMatriz>
+    <contribuyenteRimpe>CONTRIBUYENTE RÉGIMEN RIMPE</contribuyenteRimpe>
+  </infoTributaria>
+  <infoNotaCredito>
+    <fechaEmision>24/03/2023</fechaEmision>
+    <dirEstablecimiento>DESARROLLO PARA PROGRAMACION DE DISKCOVER SYSTEM</dirEstablecimiento>
+    <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
+    <razonSocialComprador>LACTESO SA</razonSocialComprador>
+    <identificacionComprador>1478523691001</identificacionComprador>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <codDocModificado>01</codDocModificado>
+    <numDocModificado>001-002-000000012</numDocModificado>
+    <fechaEmisionDocSustento>25/03/2023</fechaEmisionDocSustento>
+    <totalSinImpuestos>150</totalSinImpuestos>
+    <valorModificacion>150</valorModificacion>
+    <moneda>DOLAR</moneda>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>2</codigoPorcentaje>
+        <baseImponible>0.00</baseImponible>
+        <valor>0</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <motivo>Anulacion por Nota de Credito</motivo>
+  </infoNotaCredito>
+  <detalles>
+    <detalle>
+      <codigoInterno>01.01.37</codigoInterno>
+      <descripcion>Pollo  1</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>150.00</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>150</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>0</codigoPorcentaje>
+          <tarifa>0</tarifa>
+          <baseImponible>150</baseImponible>
+          <valor>0.00</valor>
+        </impuesto>
+      </impuestos>
+    </detalle>
+  </detalles>
+  <infoAdicional>
+    <campoAdicional nombre="Beneficiario">INDUSTRIA DE LACTEOS</campoAdicional>
+    <campoAdicional nombre="Direccion">kilometro 6</campoAdicional>
+    <campoAdicional nombre="Telefono">12542541251</campoAdicional>
+    <campoAdicional nombre="Email">example@lacteos.com</campoAdicional>
+  </infoAdicional>
+</notaCredito>
