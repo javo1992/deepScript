@@ -142,9 +142,8 @@ class loginM
     		$sql =" SELECT  codigo,detalle,link,icono FROM accesos_empresa AE
 		INNER JOIN menu M ON AE.paginas = M.id_menu 
 		 WHERE empresa ='".$id_empresa."' AND usuario='".$_SESSION['INICIO']['ID_USUARIO']."' AND codigo like '".$submenu.".%' ORDER BY codigo ";
-    	// print_r($sql);
     	}
-    	// print_r($sql);die();
+    	//print_r($sql);die();
     	$result = $this->db->datos($sql,$id_empresa);
         return $result;
 

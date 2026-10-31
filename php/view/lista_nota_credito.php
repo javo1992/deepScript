@@ -6,7 +6,7 @@
 });
 
 </script>
-	<script src="../js/nota_credito.js"></script>		
+	<script src="../js/js_system/nota_credito.js"></script>		
 <!-- Begin Page Content -->
 <main class="content">
     <div class="container-fluid p-0">    <!-- Page Heading -->

@@ -242,49 +242,72 @@ function categorias()
     });
   }
 
-function calcular()
+function calcular(caltotal=false)
 {
-    var cant = $('#txt_can').val();
-    var por_iva = $('#lbl_iva').text();
+    if(caltotal == true){
+        var total = parseFloat($('#txt_total').val()) || 0;
+        var cant = parseFloat($('#txt_can').val());
 
-    var lleva = $('#txt_llevaiva').val();
+        if (!cant || cant <= 0) {
+            cant = 1;
+            $('#txt_can').val(cant);
+        }
 
-    if(cant=='' || cant==0)
-    {
-        $('#txt_can').val(1);
+        var por_iva = parseFloat($('#lbl_iva').text()) || 0;
+
+        // Desglosar el IVA incluido en el total
+        var sub = total / (1 + (por_iva / 100));
+        var iva = total - sub;
+
+        // Precio unitario sin IVA
+        var pvp = sub / cant;
+
+        $('#txt_pvp').val(pvp.toFixed(2));
+        $('#txt_iva').val(iva.toFixed(2));
+        $('#txt_sub').val(sub.toFixed(2));
+    } else {
+        var cant = $('#txt_can').val();
+        var por_iva = $('#lbl_iva').text();
+
+        var lleva = $('#txt_llevaiva').val();
+        
+        if(cant=='' || cant==0)
+        {
+            $('#txt_can').val(1);
+        }
+        var cant = $('#txt_can').val();
+        var dcto = $('#txt_dcto').val();
+        if(dcto=='')
+        {
+            $('#txt_dcto').val(0);
+        }    
+        var dcto = $('#txt_dcto').val();
+        var pvp = $('#txt_pvp').val();
+        if(pvp=='')
+        {
+            $('#txt_pvp').val(0);
+        }
+        var pvp = $('#txt_pvp').val();
+        var pvp = parseFloat(pvp);
+
+        console.log(pvp)
+
+        var sub = cant*pvp;
+        if(lleva==1)
+        {
+        var iva = parseFloat((sub*parseFloat(por_iva))/100);
+        }else
+        {
+            iva = 0;
+            $('#txt_iva').attr('readonly');   
+        }
+        var des = parseFloat((sub*parseFloat(dcto))/100);
+        var total = sub-des+iva;
+
+        $('#txt_sub').val(sub.toFixed(2));
+        $('#txt_iva').val(iva.toFixed(2));    
+        $('#txt_total').val(total.toFixed(2));
     }
-    var cant = $('#txt_can').val();
-    var dcto = $('#txt_dcto').val();
-    if(dcto=='')
-    {
-        $('#txt_dcto').val(0);
-    }    
-    var dcto = $('#txt_dcto').val();
-    var pvp = $('#txt_pvp').val();
-    if(pvp=='')
-    {
-        $('#txt_pvp').val(0);
-    }
-    var pvp = $('#txt_pvp').val();
-    var pvp = parseFloat(pvp);
-
-    console.log(pvp)
-
-    var sub = cant*pvp;
-    if(lleva==1)
-    {
-      var iva = parseFloat((sub*parseFloat(por_iva))/100);
-    }else
-    {
-        iva = 0;
-        $('#txt_iva').attr('readonly');   
-    }
-    var des = parseFloat((sub*parseFloat(dcto))/100);
-    var total = sub-des+iva;
-
-    $('#txt_sub').val(sub.toFixed(2));
-    $('#txt_iva').val(iva.toFixed(2));    
-    $('#txt_total').val(total.toFixed(2));
 }
 
 

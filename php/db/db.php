@@ -32,7 +32,7 @@ class db
 	 	$this->usuario = "root";
 	    $this->password = ""; 
 	    $this->servidor = "localhost";
-	    $this->database ="deep_script";
+	    $this->database ="facturacion_basica";
 	    $this->puerto = '3306';
 	    $this->tipobase = 'MYSQL';	
 

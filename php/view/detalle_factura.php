@@ -187,7 +187,7 @@
             </div>
             <div class="col-sm-2">
                 <b>Total</b>
-                <input type="text" name="txt_total" id="txt_total" class="form-control form-control-sm" readonly value="0.00">
+                <input type="text" name="txt_total" id="txt_total" class="form-control form-control-sm" onblur="calcular(true)" value="0.00">
             </div> 
             <div class="col-sm-2 text-right">
                 <br>

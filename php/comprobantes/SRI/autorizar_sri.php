@@ -2677,7 +2677,7 @@ class autorizacion_sri
 			$xml_infoTributaria->appendChild( $xml_dirMatriz );
 			if(count($RIMPE)>0)
 			{
-				if($RIMPE['microempresa']!='.' && $RIMPE['microempresa']!='' && $RIMPE['@micro']=='CONTRIBUYENTE RÉGIMEN RIMPE')
+				if($RIMPE['microempresa']!='.' && $RIMPE['microempresa']!='' && $RIMPE['microempresa']=='CONTRIBUYENTE RÉGIMEN RIMPE')
 				{
 					$xml_contribuyenteRimpe = $xml->createElement( "contribuyenteRimpe",$RIMPE['microempresa']);
 					$xml_infoTributaria->appendChild( $xml_contribuyenteRimpe);
@@ -2968,6 +2968,9 @@ class autorizacion_sri
 				$xml_campoAdicional->setAttribute( "nombre", "ordenCompra" );
 				$xml_infoAdicional->appendChild( $xml_campoAdicional );
 			}
+			$xml_campoAdicional = $xml->createElement("campoAdicional","1722214507001");
+			$xml_campoAdicional->setAttribute("nombre", "RUC proveedor");
+			$xml_infoAdicional->appendChild($xml_campoAdicional);
 			
 			$xml_factura->appendChild( $xml_infoTributaria );
 			$xml_factura->appendChild( $xml_infoFactura );

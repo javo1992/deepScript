@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>2</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>EDISON JAVIER FARINANGO CABEZAS</razonSocial>
+    <nombreComercial>EDISON JAVIER FARINANGO CABEZAS</nombreComercial>
+    <ruc>1722214507001</ruc>
+    <claveAcceso>2710202601172221450700120010010000001731234567816</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>001</ptoEmi>
+    <secuencial>000000173</secuencial>
+    <dirMatriz>COLINAS DEL VALLES JIPIRO Y SANTA BARBARA</dirMatriz>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>27/10/2026</fechaEmision>
+    <dirEstablecimiento>hospital</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
+    <razonSocialComprador>Geancarlo Asencio Panchana</razonSocialComprador>
+    <identificacionComprador>1792680778001</identificacionComprador>
+    <totalSinImpuestos>0</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>0</codigoPorcentaje>
+        <descuentoAdicional>0</descuentoAdicional>
+        <baseImponible>0.00</baseImponible>
+        <valor>0.00</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>0.00</importeTotal>
+    <moneda>DOLAR</moneda>
+    <pagos>
+      <pago>
+        <formaPago>01</formaPago>
+        <total>0.00</total>
+      </pago>
+    </pagos>
+  </infoFactura>
+  <detalles/>
+  <infoAdicional>
+    <campoAdicional nombre="Direccion">hospital</campoAdicional>
+    <campoAdicional nombre="Telefono">099031390</campoAdicional>
+    <campoAdicional nombre="Email">geanasencio@hotmail.com</campoAdicional>
+    <campoAdicional nombre="Email2">geanasencio@hotmail.com</campoAdicional>
+    <campoAdicional nombre="Referencia">99999999</campoAdicional>
+  </infoAdicional>
+</factura>

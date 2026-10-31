@@ -6,7 +6,7 @@
 });
 
 </script>
-	<script src="../js/guias_remision.js"></script>		
+	<script src="../js/js_system/guias_remision.js"></script>		
 <!-- Begin Page Content -->
 <main class="content">
     <div class="container-fluid p-0">    <!-- Page Heading -->
