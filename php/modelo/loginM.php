@@ -87,7 +87,7 @@ class loginM
 
     }
 
-     function menu_lateral_dba($id_empresa,$menu=false,$submenu=false)
+    function menu_lateral_dba($id_empresa,$menu=false,$submenu=false)
     {
     	$sql = "SELECT * FROM menu 
     	WHERE  1=1 ";
@@ -229,11 +229,21 @@ class loginM
     	$sql ="SELECT count(*) as 'cant' FROM nota_credito WHERE empresa = '".$_SESSION['INICIO']['ID_EMPRESA']."'";
     	return $this->db->datos($sql,$id_empresa);    	
     }
-    // function liquidacion_compras()
-    // {
-    // 	$sql ="SELECT count(*) FROM   WHERE id_empresa = '".$_SESSION['INICIO']['ID_EMPRESA']."'";
-    // 	return $this->db->datos($db);    	
-    // }
+
+    function login_empresa_api($id_empresa,$ruc,$usuario,$pass)
+    {
+    	$sql = "SELECT * 
+    			FROM empresa 
+    			WHERE RUC ='".$ruc."' 
+    			AND api_usuario = '".$usuario."'
+    			AND api_password = '".$pass."'
+    			AND LENGTH(api_usuario)>0
+    			ANd LENGTH(api_password)>0"; 
+    	return $this->db->datos($sql,$id_empresa);
+    	
+    }
+   
+
 	
 }
 

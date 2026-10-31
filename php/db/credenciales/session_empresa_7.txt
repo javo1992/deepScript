@@ -1,6 +1,6 @@
 root
 
 localhost
-facturacion_basica
+deep_script
 3306
 MYSQL

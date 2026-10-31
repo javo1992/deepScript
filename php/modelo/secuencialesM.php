@@ -1,8 +1,5 @@
 <?php 
-if(!class_exists('db'))
-{
- include('../db/db.php');
-}
+require_once(dirname(__DIR__,1).'/db/db.php');
 /**
  * 
  */
@@ -55,6 +52,43 @@ class secuencialesM
 	{
 	    $rest = $this->db->delete($tabla,$datos,$empresa);
 		return $rest;
+	}
+	function numero_secuencial($id_empresa,$query,$tipo,$aumentar=false)
+	{
+		$sql = "SELECT * 
+				FROM codigos_secuenciales 
+				WHERE detalle_secuencial = '".$query."' 
+				AND id_empresa = '".$id_empresa."'";
+
+		$datos = $this->db->datos($sql,$id_empresa);
+		if(count($datos)>0)
+		{
+			if($aumentar)
+			{
+				$datos = $this->db->datos($sql,$id_empresa);
+				$numero = $datos[0]['numero']+1;
+				$datos = array( array('campo'=>'numero','dato'=>$numero),
+						);
+
+				$where = array( array('campo'=>'detalle_secuencial','dato'=>$query),
+								array('campo'=>'id_empresa','dato'=>$id_empresa)
+						);
+				$this->db->update('codigos_secuenciales',$datos,$where,$id_empresa);
+
+			}
+			
+		}else{
+			$datos = array( array('campo'=>'numero','dato'=>1),
+							array('campo'=>'id_empresa','dato'=>$id_empresa),
+							array('campo'=>'detalle_secuencial','dato'=>$query),
+							array('campo'=>'tipo','dato'=>$tipo),
+						);
+
+			 $rest = $this->db->inserts('codigos_secuenciales',$datos,$id_empresa);
+		}
+		
+		$datos = $this->db->datos($sql,$id_empresa);
+		return $datos;
 	}
 }
 

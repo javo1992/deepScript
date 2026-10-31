@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /deep-script/deep_script/API/
+RewriteBase /deepScript/API/
 
 RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]

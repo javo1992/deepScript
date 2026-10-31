@@ -29,16 +29,53 @@ class ordenTrabajoM
 	{
 		$sql = "SELECT * 
 				FROM ordenes_trabajo 
-				where fecha = '".$fecha."' ";
+				where fecha = '".$fecha."' 
+				AND estado_orden <> 'F'";
 				if($placa)
 				{
-					$sql.=" AND PLACA like '".$placa."%'";
+					$sql.=" AND placa like '".$placa."%'";
 				}
 
 		return $this->db->datos($sql,$idempresa);
 	}
 
-	
+	function detalle_ordenes_trabajo($idempresa,$id=false,$placa=false)
+	{
+		$sql = "SELECT * 
+				FROM ordenes_trabajo 
+				where estado_orden <> 'F' ";
+				if($id)
+				{
+					$sql.=" AND id_orden = '".$id."'";
+				}
+
+				if($placa)
+				{
+					$sql.=" AND PLACA like '".$placa."%'";
+				}
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
+	function lineas_orden_trabajo($idempresa,$orden,$id=false)
+	{
+		$sql = "SELECT L.*,C.nombre as categoria
+				FROM lineas_orden_trabajo L 
+				INNER JOIN productos P ON L.referencia = P.referencia
+				INNER JOIN categoria C ON P.categoria = C.id_categoria
+				where id_orden = ".$orden." ";
+				if($id)
+				{
+					$sql.=" AND id_lineas = '".$id."'";
+				}
+		$sql.=" order by id_lineas desc";
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}	
 }
 
 

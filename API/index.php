@@ -38,21 +38,50 @@ if (!str_starts_with($uri, $basePath)) {
 
 $relative = trim(substr($uri, strlen($basePath)), '/');   // 'articulo/5'
 $parts    = $relative === '' ? [] : explode('/', $relative);
-$route    = '/' . ($parts[0] ?? '');
-$id       = $parts[1] ?? null;
+$route    = '/' . implode('/', $parts);
 
 // ---------- Buscar en routes.php ----------
 $routes = require __DIR__ . '/routes.php';
-$match  = $routes[$method][$route] ?? null;
+$matchRoute = static function (string $pattern, array $pathParts): ?array {
+    $patternParts = trim($pattern, '/') === '' ? [] : explode('/', trim($pattern, '/'));
+    if (count($patternParts) !== count($pathParts)) {
+        return null;
+    }
+
+    $params = [];
+    foreach ($patternParts as $index => $patternPart) {
+        if (preg_match('/^\{([A-Za-z_][A-Za-z0-9_]*)\}$/', $patternPart, $matches)) {
+            $params[$matches[1]] = $pathParts[$index];
+        } elseif ($patternPart !== $pathParts[$index]) {
+            return null;
+        }
+    }
+
+    return $params;
+};
+
+$match = null;
+$pathParams = [];
+$allowed = [];
+foreach ($routes as $httpMethod => $methodRoutes) {
+    foreach ($methodRoutes as $routePattern => $routeConfig) {
+        $params = $matchRoute($routePattern, $parts);
+        if ($params === null) {
+            continue;
+        }
+
+        $allowed[] = $httpMethod;
+        if ($httpMethod === $method) {
+            $match = $routeConfig;
+            $pathParams = $params;
+        }
+    }
+}
 
 if (!$match) {
     // 405 si la ruta existe con otros métodos, 404 si no existe
-    $allowed = array_keys(array_filter(
-        $routes,
-        fn(array $list) => isset($list[$route])
-    ));
-
     if ($allowed) {
+        $allowed = array_values(array_unique($allowed));
         header('Allow: ' . implode(', ', $allowed));
         http_response_code(405);
         echo json_encode([
@@ -104,9 +133,7 @@ $body = match (true) {
     default                                    => $_POST + $_GET,
 };
 
-if ($id !== null && $id !== '') {
-    $body['id'] = $id;   // el id de la URL siempre manda
-}
+$body = array_merge($body, $pathParams);   // los valores de la URL siempre mandan
 
 // ---------- Ejecutar ----------
 $authLevel = $match['auth'] ?? 'required';   // required | optional | none

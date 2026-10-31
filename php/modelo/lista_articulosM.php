@@ -1,8 +1,5 @@
 <?php
-if(!class_exists('db'))
-{
- 	require_once('../db/db.php');
-}
+require_once( dirname(__DIR__,1).'/db/db.php');
 /**
  * 
  */
@@ -218,7 +215,54 @@ class lista_articulosM
     		$sql.=" AND nombre = '".$query."'";
     	}
     	return $this->db->datos($sql,$_SESSION['INICIO']['ID_EMPRESA']);
+    }
 
+    function articulo_stock_precio_venta($idempresa,$query=false,$categoria=false,$servicio=0,$referencia=false,$id=false)
+    {
+    	$sql = "SELECT 
+					    P.id_productos,
+					    P.referencia,
+					    P.nombre,
+					    P.precio_uni,
+					    COALESCE(MAX(TK.costo),0)                                AS costo,
+					    COALESCE(SUM(TK.entrada) - SUM(TK.salida), 0) AS stock,
+					    P.categoria,
+					    P.iva
+
+					FROM productos P
+					LEFT JOIN trans_kardex TK 
+					       ON P.id_productos = TK.id_producto 
+					      AND P.id_empresa   = TK.empresa
+					WHERE P.id_empresa = ".$idempresa."
+					AND servicio = '".$servicio."'";
+					if($categoria)
+					{
+						$sql.=" AND categoria= '".$categoria."' ";
+					}  
+					if($query)
+					{
+						$sql.=" AND (nombre like '%".$query."%' OR referencia  like '%".$query."%') ";
+					}   
+
+					if($id)
+					{
+						$sql.=" AND id_productos= '".$id."' ";
+					}  
+					if($referencia)
+					{
+						$sql.=" AND referencia = '".$referencia."'";
+					}
+
+		$sql.=" GROUP BY 
+					    P.id_productos,
+					    P.referencia,
+					    P.nombre,
+					    P.precio_uni,
+					    P.categoria;";
+
+		// print_r($sql);die();
+
+    	return $this->db->datos($sql,$idempresa);
     }
 
 

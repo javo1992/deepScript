@@ -47,7 +47,7 @@ class db
 	 	$this->usuario = "root";
 	    $this->password = ""; 
 	    $this->servidor = "localhost";
-	    $this->database ="facturacion";
+	    $this->database ="deep_script";
 	    $this->puerto = '3306';
 	    $this->tipobase = 'MYSQL';	
 

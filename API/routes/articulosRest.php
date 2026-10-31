@@ -8,18 +8,19 @@ return [
             'action'   => 'store',
             'auth'     => 'required',
         ],
+        '/Arti' => [
+            'endpoint' => 'ArticuloApi', 
+            'action'   => 'Arti',
+            'auth'     => 'required',
+        ],
+
     ],
 
     'GET' => [
-        '/articulo' => [
-            'endpoint' => 'ArticuloList',
-            'action'   => 'index',
-            'auth'     => 'optional',   // público, pero si hay token lo expone
-        ],
-        '/articulo/{id}' => [
-            'endpoint' => 'ArticuloShow',
-            'action'   => 'show',
-            'auth'     => 'optional',
+        '/articulo/{id}/{servicio}/{categoria}/{articulo}/{referencia}' => [
+            'endpoint' => 'ArticuloApi',
+            'action'   => 'lista_articulos',
+            'auth'     =>  'required',
         ],
     ],
 

@@ -565,10 +565,10 @@ class db
 			// {
 			// 	mkdir('../db/credenciales/',7777);
 			// }
-			 if(!file_exists('../db/credenciales/session_empresa_'.$empresa.'.txt'))
+			 if(!file_exists(dirname(__DIR__).'/db/credenciales/session_empresa_'.$empresa.'.txt'))
 			    {
-			    	if(!file_exists('../db/credenciales/')){
-			    		mkdir('../db/credenciales/',7777);			    	
+			    	if(!file_exists(dirname(__DIR__).'/db/credenciales/')){
+			    		mkdir(dirname(__DIR__).'/db/credenciales/',7777);			    	
 			    	}
 
 					$this->default_conexion();
@@ -600,7 +600,7 @@ class db
 					 $this->tipobase = $datos[0]['TIPO_BASE'];
 
 			 
-		    		$file = fopen('../db/credenciales/session_empresa_'.$empresa.'.txt', "w");
+		    		$file = fopen(dirname(__DIR__).'/db/credenciales/session_empresa_'.$empresa.'.txt', "w");
                      fwrite($file,$this->usuario.PHP_EOL);
 		    		 fwrite($file,$this->password.PHP_EOL);
                      fwrite($file,$this->servidor.PHP_EOL);
@@ -610,7 +610,7 @@ class db
 		    		fclose($file);
 			    }else
 			    {
-			    	$file = fopen('../db/credenciales/session_empresa_'.$empresa.'.txt', "r");
+			    	$file = fopen(dirname(__DIR__).'/db/credenciales/session_empresa_'.$empresa.'.txt', "r");
 				     $conn = array();
 				     while(!feof($file)) {
 				      $conn[] = fgets($file);
