@@ -39,6 +39,21 @@ class ordenTrabajoM
 		return $this->db->datos($sql,$idempresa);
 	}
 
+	function listar_ordenes_rango($parametros){
+		$sql = "SELECT num_orden, fecha, encargado, telefono_encargado, subtotal, descuento, iva, total, serie, estado_orden, placa, estado_pago 
+				FROM ordenes_trabajo
+				where fecha >= '".$parametros['desde']."'";
+				if($parametros['hasta'] != ''){
+					$sql.=" AND fecha <= '".$parametros['hasta']."'";
+				}
+				if (!empty($parametros['placa']))
+				{
+					$sql.=" AND placa like '".$parametros['placa']."%'";
+				}
+				$sql.=" AND id_empresa = '".$_SESSION['INICIO']['ID_EMPRESA']."'";
+		return $this->db->datos($sql, $_SESSION['INICIO']['ID_EMPRESA']);
+	}
+
 	function detalle_ordenes_trabajo($idempresa,$id=false,$placa=false)
 	{
 		$sql = "SELECT * 
@@ -75,7 +90,16 @@ class ordenTrabajoM
 		// print_r($sql);die();
 
 		return $this->db->datos($sql,$idempresa);
-	}	
+	}
+
+	function detalle_orden($idempresa,$orden)
+	{
+		$sql = "SELECT * 
+				FROM ordenes_trabajo 
+				where id_empresa = '".$idempresa."' AND num_orden = '".$orden."'";
+
+		return $this->db->datos($sql,$idempresa);
+	}
 }
 
 
