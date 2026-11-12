@@ -232,12 +232,17 @@ class loginM
     function login_empresa_api($id_empresa,$ruc,$usuario,$pass)
     {
     	$sql = "SELECT * 
-    			FROM empresa 
+    			FROM empresa E
+    			INNER JOIN usuario U ON E.id_empresa = U.id_empresa
     			WHERE RUC ='".$ruc."' 
     			AND api_usuario = '".$usuario."'
     			AND api_password = '".$pass."'
     			AND LENGTH(api_usuario)>0
-    			ANd LENGTH(api_password)>0"; 
+    			ANd LENGTH(api_password)>0
+    			AND nick = '".$usuario."'
+    			AND pass = '".$pass."' "; 
+
+    			// print_r($sql);die();
     	return $this->db->datos($sql,$id_empresa);
     	
     }

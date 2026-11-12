@@ -1,7 +1,7 @@
 <?php
 
 // print_r(dirname(__DIR__));die();
-include(dirname(__DIR__).'/db/db.php');
+require_once(dirname(__DIR__).'/db/db.php');
 /**
  * 
  */
@@ -72,6 +72,7 @@ class lista_facturaM
 	
     function lista_facturas($parametros)
 	{
+		if(!isset($parametros['id_empresa']))
 		$sql= "SELECT id_factura as 'id',num_factura as 'num',fecha,C.nombre,total,serie,estado_factura as 'estado',Autorizacion,estado_pago as 'pago'
 		FROM facturas F 
 		INNER JOIN cliente C ON F.id_cliente = C.id_cliente 
@@ -353,6 +354,37 @@ class lista_facturaM
 
 		// print_r($sql);die();
 		$result = $this->db->datos($sql,$id_empresa);
+	    return $result;
+	}
+
+	function lista_facturas_api($parametros)
+	{
+		$sql= "SELECT id_factura as 'id',num_factura as 'num',fecha,C.nombre,total,serie,estado_factura as 'estado',Autorizacion,estado_pago as 'pago'
+		FROM facturas F 
+		INNER JOIN cliente C ON F.id_cliente = C.id_cliente 
+		WHERE F.id_empresa = '".$parametros['id_empresa']."' ";
+		if(isset($parametros['query']) && $parametros['query'])
+		{			
+			$sql.=" AND C.nombre LIKE '%".$parametros['query']."%'";
+		}
+		if(isset($parametros['numfac']) && $parametros['numfac'])
+		{
+			if(is_numeric($parametros['numfac']))
+			{
+				$sql.=" AND num_factura LIKE '%".$parametros['numfac']."%'";
+			}
+		}
+		if(isset($parametros['desde']) && $parametros['desde']!='' &&  isset($parametros['hasta']) && $parametros['hasta']!='')
+		{			
+			$sql.=" AND fecha BETWEEN '".$parametros['desde']."' AND '".$parametros['hasta']."'";
+		}
+
+		if($parametros['serie'])
+		{			
+			$sql.=" AND serie = '".$parametros['serie']."'";
+		}		
+		$sql.=" ORDER BY F.id_factura DESC";
+		$result = $this->db->datos($sql,$parametros['id_empresa']);
 	    return $result;
 	}
 

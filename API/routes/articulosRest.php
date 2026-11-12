@@ -1,35 +1,17 @@
 <?php 
 return [
-    // ---------- Auth ----------
-    'POST' => [
-        // ---------- Articulo ----------
-        '/articulo' => [
-            'endpoint' => 'ArticuloCreate',
-            'action'   => 'store',
-            'auth'     => 'required',
-        ],
-        '/Arti' => [
-            'endpoint' => 'ArticuloApi', 
-            'action'   => 'Arti',
-            'auth'     => 'required',
-        ],
-
+    
+    'POST' => [ '/articulo' => ['endpoint' => 'ArticuloApi','action'   => 'addArticulo','auth'     => 'required',   ],
+                '/aliStock/{id}' => ['endpoint' => 'ArticuloApi','action'   => 'aliStock','auth'     => 'required',   ],
+    
     ],
-
     'GET' => [
-        '/articulo/{id}/{servicio}/{categoria}/{articulo}/{referencia}' => [
-            'endpoint' => 'ArticuloApi',
-            'action'   => 'lista_articulos',
-            'auth'     =>  'required',
-        ],
+        '/articulo/{id}/{servicio}/{categoria}/{articulo}/{referencia}' => 
+                            ['endpoint' => 'ArticuloApi','action'   => 'lista_articulos','auth'     =>  'required', ],
     ],
 
     'PUT' => [
-        '/articulo/{id}' => [
-            'endpoint' => 'ArticuloUpdate',
-            'action'   => 'update',
-            'auth'     => 'required',
-        ],
+        '/articulo/{id}' => ['endpoint' => 'ArticuloApi','action'   => 'update','auth'     => 'required', ],
     ],
 
     'DELETE' => [

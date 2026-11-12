@@ -46,7 +46,9 @@ class login
                     'company' => $data[0]['email'],
                     'id_empresa' => $data[0]['id_empresa'],
                     'iva_val' => $data[0]['valor_iva'],
-                    'usuario' => $username,
+                    'usuario' => $username,                    
+                    'id_usuario' => $data[0]['id_usuario'],
+                    'serie' =>$data[0]['serie'],
                     'role'  => 'admin',
                 ], $this->cfg['jwt_ttl']);
 

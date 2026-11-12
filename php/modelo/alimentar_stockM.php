@@ -1,8 +1,6 @@
 <?php 
-if(!class_exists('db'))
-{
- include('../db/db.php');
-}
+require_once(dirname(__DIR__,1).'/db/db.php');
+
 /**
  * 
  */
@@ -86,12 +84,113 @@ class alimentar_stockM
 		// return $this->db->sql_string($sql,$_SESSION['INICIO']['ID_EMPRESA']);
 	}
 
-	// function eliminar($id)
-	// {
-	// 	$sql="DELETE FROM kardex_temp WHERE id_kardex='".$id."'";
-	// 	return $this->db->sql_string($sql,$_SESSION['INICIO']['ID_EMPRESA']);
+	function lista_articulos_stock($idempresa,$query=false,$categoria=false,$servicio=0,$referencia=false,$id=false)
+	{
+					$sql = "SELECT 
+					    P.id_productos,
+					    P.referencia,
+					    P.nombre,
+					    P.precio_uni,
+					    COALESCE(MAX(TK.costo),0)                                AS costo,
+					    COALESCE(SUM(TK.entrada) - SUM(TK.salida), 0) AS stock,
+					    P.categoria,
+					    P.iva, 
+					    P.min,
+					    P.max,
+					    P.uni_medida
 
-	// }
+					FROM productos P
+					LEFT JOIN trans_kardex TK 
+					       ON P.id_productos = TK.id_producto 
+					      AND P.id_empresa   = TK.empresa
+					WHERE P.id_empresa = ".$idempresa."
+					AND servicio = '".$servicio."'";
+					if($categoria)
+					{
+						$sql.=" AND categoria= '".$categoria."' ";
+					}  
+					if($query)
+					{
+						$sql.=" AND (nombre like '%".$query."%' OR referencia  like '%".$query."%') ";
+					}   
+
+					if($id)
+					{
+						$sql.=" AND id_productos= '".$id."' ";
+					}  
+					if($referencia)
+					{
+						$sql.=" AND referencia = '".$referencia."'";
+					}
+
+		$sql.=" GROUP BY 
+					    P.id_productos,
+					    P.referencia,
+					    P.nombre,
+					    P.precio_uni,
+					    P.categoria;";
+
+		// print_r($sql);die();
+
+    	return $this->db->datos($sql,$idempresa);
+    }
+
+    function lista_kardex($idempresa,$query=false,$categoria=false,$servicio=false,$referencia=false,$id=false,$entradas=false)
+    {
+    	$sql = "SELECT T.id_kardex as id,P.nombre as producto,T.fecha,entrada,salida,existencias,costo,CONCAT(F.serie,'-',F.num_factura) as factura ,detalle,O.num_orden as orden,C.nombre as categoria,C.id_categoria
+    		FROM trans_kardex T
+    		INNER JOIN productos P ON T.id_producto = P.id_productos
+    		LEFT JOIN facturas F ON T.id_factura = F.id_factura
+    		LEFT JOIN ordenes_trabajo O ON T.id_ordenTrabajo = O.id_orden 
+    		LEFT JOIN categoria C ON P.categoria = C.id_categoria AND T.empresa = C.empresa     		
+    		WHERE T.empresa = '".$idempresa."'";
+    		if($query)
+    		{
+    			$sql.=" AND (P.nombre like '%".$query."%' or P.referencia like '%".$query."%')";
+    		}
+
+    		if($categoria)
+			{
+				$sql.=" AND categoria= '".$categoria."' ";
+			}  
+			
+			if($id)
+			{
+				$sql.=" AND id_productos= '".$id."' ";
+			}  
+			if($referencia)
+			{
+				$sql.=" AND referencia = '".$referencia."'";
+			}
+			if($servicio)
+			{
+				if($servicio==1)
+				{
+					$sql.= " AND P.servicio = '".$servicio."'";
+				}else{					
+					$sql.= " AND P.servicio = '0'";
+				}
+			}
+
+			if($entradas)
+			{
+				if($entradas==1)
+				{
+					$sql.= " AND T.entrada <> 0";
+				}else{
+					$sql.= " AND T.salida <> 0";					
+				}
+			}
+
+			$sql.="  ORDER BY  T.fecha DESC";
+
+			// print_r($sql);die();
+
+			return $this->db->datos($sql,$idempresa);
+
+
+
+    }
 }
 
 ?>

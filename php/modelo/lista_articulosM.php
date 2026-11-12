@@ -1,5 +1,7 @@
 <?php
-require_once( dirname(__DIR__,1).'/db/db.php');
+
+require_once(dirname(__DIR__,1).'/db/db.php');
+
 /**
  * 
  */
@@ -12,9 +14,10 @@ class lista_articulosM
 		$this->db = new db();
 	}
 
-	function insertar($datos,$tabla)
+	function insertar($datos,$tabla='productos',$idempresa=false)
 	{
-		 $rest = $this->db->inserts('productos',$datos,$_SESSION['INICIO']['ID_EMPRESA']);	   
+		if(!$idempresa){ $idempresa = $_SESSION['INICIO']['ID_EMPRESA']; }
+		 $rest = $this->db->inserts($tabla,$datos,$idempresa);	   
 		return $rest;
 	}
 
@@ -24,9 +27,10 @@ class lista_articulosM
 		return $rest;
 	}
 
-	function update($datos,$tabla,$where)
+	function update($datos,$tabla,$where,$idempresa=false)
 	{
-		 $rest = $this->db->update('productos',$datos,$where,$_SESSION['INICIO']['ID_EMPRESA']);	   
+		if(!$idempresa){ $idempresa = $_SESSION['INICIO']['ID_EMPRESA']; }
+		 $rest = $this->db->update('productos',$datos,$where,$idempresa);	   
 		return $rest;
 	}
 	function update_($datos,$tabla,$where)
@@ -227,7 +231,11 @@ class lista_articulosM
 					    COALESCE(MAX(TK.costo),0)                                AS costo,
 					    COALESCE(SUM(TK.entrada) - SUM(TK.salida), 0) AS stock,
 					    P.categoria,
-					    P.iva
+					    P.iva,
+					    P.max,
+					    P.min,
+					    P.uni_medida,
+					    P.servicio
 
 					FROM productos P
 					LEFT JOIN trans_kardex TK 
@@ -261,6 +269,35 @@ class lista_articulosM
 					    P.categoria;";
 
 		// print_r($sql);die();
+
+    	return $this->db->datos($sql,$idempresa);
+    }
+
+    function buscar_producto($idempresa,$query=false,$categoria=false,$servicio=0,$referencia=false,$id=false)
+    {
+    	$sql = "SELECT	referencia,nombre,precio_uni,iva,stock,servicio,inventario,producto_terminado,peso,categoria,codigo_aux,codigo_bar,id_empresa,foto,marca,modelo,uni_medida,color,genero,estado,sucursal,RFID,fecha_creacion,descripcion2,max,min,serie_pro,promocion,materia_prima,paquetes,xpaquetes,sueltos
+					FROM productos P
+					WHERE P.id_empresa = ".$idempresa;
+					if($servicio)
+					{
+						$sql.=" AND servicio = '".$servicio."'";
+					}
+					if($categoria)
+					{
+						$sql.=" AND categoria= '".$categoria."' ";
+					}  
+					if($query)
+					{
+						$sql.=" AND nombre = '".$query."'";
+					}   
+					if($id)
+					{
+						$sql.=" AND id_productos= '".$id."' ";
+					}  
+					if($referencia)
+					{
+						$sql.=" AND referencia = '".$referencia."'";
+					}
 
     	return $this->db->datos($sql,$idempresa);
     }

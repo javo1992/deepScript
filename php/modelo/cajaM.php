@@ -36,6 +36,47 @@ class cajaM
 		return $this->db->datos($sql,$idempresa);
 	}
 
+	function buscar_caja_abierta_anteriores($idempresa,$fecha,$estado=1)
+	{
+		$sql = "SELECT * 
+				FROM caja 
+				WHERE id_empresa = '".$idempresa."' 
+				AND fecha_caja <> '".$fecha."' 
+				AND estado_caja = '".$estado."'";
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
+
+	function lista_pagos($idempresa,$caja=false)
+	{
+		$sql = "SELECT id_pagos,valor_pago,id_factura,forma_pago,fecha,mesa,detalle,inicial,estado,id_orden,id_caja,id_usuario,id_empresa
+				FROM pagos_caja 
+				WHERE id_empresa = '".$idempresa."' 
+				AND estado= 1 ";
+				if($caja)
+				{
+					$sql.=" AND id_caja = '".$caja."'";
+				}
+				// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
+	function lista_egresos($idempresa,$caja=false)
+	{
+		$sql = "SELECT id_pagos,valor_pago,id_factura,forma_pago,fecha,mesa,detalle,inicial,estado,id_orden,id_caja,id_usuario,id_empresa
+				FROM egresos_caja 
+				WHERE id_empresa = '".$idempresa."' 
+				AND estado= 1 ";
+				if($caja)
+				{
+					$sql.=" AND id_caja = '".$caja."'";
+				}
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
 
 	// function datos_empresa($id_empresa)
 	// {

@@ -17,7 +17,7 @@ return [
     ],
 
     'PUT' => [
-        '/articulo/{id}' => [
+        '/categoria/{id}' => [
             'endpoint' => 'ArticuloUpdate',
             'action'   => 'update',
             'auth'     => 'required',

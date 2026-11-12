@@ -1,5 +1,6 @@
 <?php
-require_once('../db/db.php');
+
+require_once(dirname(__DIR__,1).'/db/db.php');
 /**
  * 
  */
@@ -127,6 +128,29 @@ class clienteM
 		$sql.=' ORDER by id_cliente DESC';
 		// print_r($sql);die();
 		return $this->db->datos($sql,$empresa);
+	}
+
+	function lista_clientes_all_api($idempresa,$query=false,$ci=false,$id=false)
+	{
+
+		$sql = "SELECT id_cliente as 'id',nombre,ci_ruc,telefono,mail,direccion,Razon_Social as 'razon',foto,estado 
+				FROM cliente 
+				WHERE id_empresa='".$idempresa."' ";
+		if($id)
+		{
+			$sql.=" AND id_cliente = '".$id."'";
+		}
+		if($query)
+		{
+			$sql.=" and nombre LIKE '%".$query."%'";
+		}
+		if($ci)
+		{
+			$sql.=" and ci_ruc LIKE '%".$ci."%'";
+		}
+		$sql.=' ORDER by id_cliente DESC';
+		// print_r($sql);die();
+		return $this->db->datos($sql,$idempresa);
 	}
 	
 }

@@ -76,6 +76,54 @@ class ordenTrabajoM
 
 		return $this->db->datos($sql,$idempresa);
 	}	
+
+	function detalleExtraOrdenes($idempresa,$orden,$id=false)
+	{
+		$sql = "SELECT id_detalle_extra,detalle_extra,fecha_detalle_extra,id_empresa,id_orden,id_usuario,valor,id_factura
+				FROM detalles_extras 
+				where id_orden = ".$orden;
+				if($id)
+				{
+					$sql.=" AND id_detalle_extra = '".$id."'";
+				}
+		$sql.=" order by id_detalle_extra desc";
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}	
+
+	function observacionesOrdenes($idempresa,$orden,$id=false)
+	{
+		$sql = "SELECT id_observacion_orden,detalle_observacion,fecha_observacion,id_empresa,id_usuario,id_orden
+				FROM observacion_orden_trabajo 
+				where id_orden = ".$orden;
+				if($id)
+				{
+					$sql.=" AND id_observacion_orden = '".$id."'";
+				}
+		$sql.=" order by id_observacion_orden desc";
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}	
+
+	function fotosOrdenes($idempresa,$orden,$id=false)
+	{
+		$sql = "SELECT id_fotos_orden,id_orden,CONCAT(ruta_img,'?',RAND()) as ruta_img,id_empresa,id_usuario,posicion_foto
+				FROM fotos_orden_trabajo 
+				where id_orden = ".$orden;
+				if($id)
+				{
+					$sql.=" AND id_fotos_orden = '".$id."'";
+				}
+		$sql.=" order by id_fotos_orden desc";
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}	
 }
 
 

@@ -1,6 +1,6 @@
-deep-script
-Ef1722214507*
-deep-script.com
-deep_script_desarrollo
+root
+
+localhost
+deep_script
 3306
 MYSQL

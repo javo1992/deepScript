@@ -1,23 +1,18 @@
 <?php 
 return [
     'POST' => [  '/caja' => [   'endpoint' => 'cajaApi', 'action'   => 'addCaja', 'auth'     => 'required',  ],
+     '/addpago/{caja}' => [   'endpoint' => 'cajaApi', 'action'   => 'addpago', 'auth'     => 'required',  ],
+    '/cierrecaja/{idcaja}'=> [  'endpoint' => 'cajaApi', 'action' => 'cierrecaja', 'auth' => 'required',],
+     '/addegreso/{caja}' => [   'endpoint' => 'cajaApi', 'action'   => 'addegreso', 'auth'     => 'required',  ],
     ],
 
-    'GET' => [
-        '/caja' => [
-            'endpoint' => 'cajaApi',
-            'action'   => 'index',
-            'auth'     => 'optional',   // público, pero si hay token lo expone
-        ],
-        '/articulo/{id}' => [
-            'endpoint' => 'ArticuloShow',
-            'action'   => 'show',
-            'auth'     => 'optional',
-        ],
+    'GET' => [ '/ListaCajaAbiertasAnteriores/{fechaActual}' => ['endpoint' => 'cajaApi','action'  => 'ListaCajaAbiertasAnteriores','auth'     => 'required',],
+        '/cajaDetalle/{fechaActual}/{estado}' => ['endpoint' => 'cajaApi','action'   => 'cajaDetalle','auth'     => 'required', ],
+        '/CajadetalleCierre/{idcaja}' => ['endpoint' => 'cajaApi','action'   => 'CajadetalleCierre','auth'     => 'required', ],
     ],
 
     'PUT' => [
-        '/articulo/{id}' => [
+        '/caja/{id}' => [
             'endpoint' => 'ArticuloUpdate',
             'action'   => 'update',
             'auth'     => 'required',
