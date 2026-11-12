@@ -132,44 +132,52 @@ class cajaApi extends ApiEndpoint
         $params = array_merge($params, $tokenData);
 
         // print_r($params);die();
-        $total_inicio = 0;
-        $total_efectivo = 0;
-        $total_transferencias = 0;
-        $total_otros = 0;
-        $pagos = $this->caja->lista_pagos($params['id_empresa'],$params['idcaja']);
+        try {
+            
+       
+            $total_inicio = 0;
+            $total_efectivo = 0;
+            $total_transferencias = 0;
+            $total_otros = 0;
+            $pagos = $this->caja->lista_pagos($params['id_empresa'],$params['idcaja']);
 
-         // print_r($pagos);die();
+             // print_r($pagos);die();
 
-        foreach ($pagos as $key => $value) {
-            if($value['inicial']==1)
-            {
-                $total_inicio+=$value['valor_pago'];
-            }else{
-                if($value['forma_pago']=='01')
+            foreach ($pagos as $key => $value) {
+                if($value['inicial']==1)
                 {
-                    $total_efectivo+=$value['valor_pago'];
-
-                }else if($value['forma_pago']=='20'){
-                    $total_transferencias+=$value['valor_pago'];
+                    $total_inicio+=$value['valor_pago'];
                 }else{
-                    $total_otros+=$value['valor_pago'];
+                    if($value['forma_pago']=='01')
+                    {
+                        $total_efectivo+=$value['valor_pago'];
+
+                    }else if($value['forma_pago']=='20'){
+                        $total_transferencias+=$value['valor_pago'];
+                    }else{
+                        $total_otros+=$value['valor_pago'];
+                    }
                 }
             }
+
+            $total_egresos = 0;
+            $egresos = $this->caja->lista_egresos($params['id_empresa'],$params['idcaja']);
+            foreach ($egresos as $key => $value) {
+                 $total_egresos+=$value['valor_pago'];
+            }
+
+
+            $total_caja = ($total_inicio +$total_efectivo +$total_transferencias +$total_otros) - $total_egresos;
+            $total_efectivo_dia = ($total_efectivo+$total_inicio) -$total_egresos;
+
+            $data =  array('caja_inicial'=>$total_inicio,'total_efectivo'=>number_format($total_efectivo,2,'.',''),'total_transferencias'=>number_format($total_transferencias,2,'.',''),'total_otros'=>number_format($total_otros,2,'.',''),'total_egresos'=>number_format($total_egresos,2,'.',''),'total_caja'=>number_format($total_caja,2,'.',''),'total_efectivo_dia'=>number_format($total_efectivo_dia,2,'.',''));
+
+            return $data;
+         } catch (Exception $e) {
+
+            return $e;
+            
         }
-
-        $total_egresos = 0;
-        $egresos = $this->caja->lista_egresos($params['id_empresa'],$params['idcaja']);
-        foreach ($egresos as $key => $value) {
-             $total_egresos+=$value['valor_pago'];
-        }
-
-
-        $total_caja = ($total_inicio +$total_efectivo +$total_transferencias +$total_otros) - $total_egresos;
-        $total_efectivo_dia = ($total_efectivo+$total_inicio) -$total_egresos;
-
-        $data =  array('caja_inicial'=>$total_inicio,'total_efectivo'=>number_format($total_efectivo,2,'.',''),'total_transferencias'=>number_format($total_transferencias,2,'.',''),'total_otros'=>number_format($total_otros,2,'.',''),'total_egresos'=>number_format($total_egresos,2,'.',''),'total_caja'=>number_format($total_caja,2,'.',''),'total_efectivo_dia'=>number_format($total_efectivo_dia,2,'.',''));
-
-        return $data;
     }
 
 
