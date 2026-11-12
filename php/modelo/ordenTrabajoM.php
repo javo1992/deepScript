@@ -90,7 +90,6 @@ class ordenTrabajoM
 		// print_r($sql);die();
 
 		return $this->db->datos($sql,$idempresa);
-<<<<<<< HEAD
 	}	
 
 	function detalleExtraOrdenes($idempresa,$orden,$id=false)
@@ -140,8 +139,7 @@ class ordenTrabajoM
 
 		return $this->db->datos($sql,$idempresa);
 	}	
-=======
-	}
+	
 
 	function detalle_orden($idempresa,$orden)
 	{
@@ -151,7 +149,6 @@ class ordenTrabajoM
 
 		return $this->db->datos($sql,$idempresa);
 	}
->>>>>>> 2993cb78ec1296124cc52de1a95ae4ec22c64013
 }
 
 
