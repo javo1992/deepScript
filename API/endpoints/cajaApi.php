@@ -38,7 +38,7 @@ class cajaApi extends ApiEndpoint
                         array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
                         array('campo'=>'valor_inicial','dato'=>$params['inicio']),
                         array('campo'=>'fecha_caja','dato'=>$params['fecha']),
-                        array('campo'=>'estado_caja','dato'=>true),
+                        array('campo'=>'estado_caja','dato'=>intval(1),
                         array('campo'=>'observacion','dato'=>$params['observacion']),
                         array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
                 );
