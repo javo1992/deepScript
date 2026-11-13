@@ -9,6 +9,7 @@ return [
     'GET' => [ '/ListaCajaAbiertasAnteriores/{fechaActual}' => ['endpoint' => 'cajaApi','action'  => 'ListaCajaAbiertasAnteriores','auth'     => 'required',],
         '/cajaDetalle/{fechaActual}/{estado}' => ['endpoint' => 'cajaApi','action'   => 'cajaDetalle','auth'     => 'required', ],
         '/CajadetalleCierre/{idcaja}' => ['endpoint' => 'cajaApi','action'   => 'CajadetalleCierre','auth'     => 'required', ],
+        '/ListaCaja/{fechaActual}/{estado}' => ['endpoint' => 'cajaApi','action'   => 'ListaCaja','auth'     => 'required', ],
     ],
 
     'PUT' => [

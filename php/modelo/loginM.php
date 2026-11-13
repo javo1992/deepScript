@@ -167,7 +167,7 @@ class loginM
 			return $datos[0];
 		}else
 		{
-			return '-1';
+			return array();
 		}
 
     }

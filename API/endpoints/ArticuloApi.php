@@ -110,7 +110,7 @@ class ArticuloApi extends ApiEndpoint
                             array('campo'=>'existencias','dato'=>$params['cantidad']),
                             array('campo'=>'costo','dato'=>$params['precio']),
                             array('campo'=>'valor_total','dato'=>number_format($params['cantidad']*$params['precio'],2,'.','')),
-                            array('campo'=>'id_factura','dato'=>'.'),
+                            array('campo'=>'id_factura','dato'=>'0'),
                             array('campo'=>'detalle','dato'=>'INGRESO INICIAL DE STOCK'),
                             array('campo'=>'fecha_Fab','dato'=>date('Y-m-d')),
                             array('campo'=>'fecha_Exp','dato'=>date('Y-m-d')),
@@ -119,7 +119,7 @@ class ArticuloApi extends ApiEndpoint
                             array('campo'=>'cliente','dato'=>''),
                             array('campo'=>'serie','dato'=>''),
                             array('campo'=>'empresa','dato'=>$params['id_empresa']),
-                            array('campo'=>'id_ordenTrabajo','dato'=>''),
+                            array('campo'=>'id_ordenTrabajo','dato'=>'0'),
                         );
                         // print_r($datos);die();
 
@@ -221,7 +221,7 @@ class ArticuloApi extends ApiEndpoint
                     array('campo'=>'existencias','dato'=>$producto[0]['stock']),
                     array('campo'=>'costo','dato'=>$producto[0]['costo']),
                     array('campo'=>'valor_total','dato'=>number_format($producto[0]['stock']*$producto[0]['costo'],2,'.','')),
-                    array('campo'=>'id_factura','dato'=>'.'),
+                    array('campo'=>'id_factura','dato'=>'0'),
                     array('campo'=>'detalle','dato'=>'REAJUSTE DE STOCK'),
                     array('campo'=>'fecha_Fab','dato'=>date('Y-m-d')),
                     array('campo'=>'fecha_Exp','dato'=>date('Y-m-d')),
@@ -230,7 +230,7 @@ class ArticuloApi extends ApiEndpoint
                     array('campo'=>'cliente','dato'=>''),
                     array('campo'=>'serie','dato'=>''),
                     array('campo'=>'empresa','dato'=>$params['id_empresa']),
-                    array('campo'=>'id_ordenTrabajo','dato'=>''),
+                    array('campo'=>'id_ordenTrabajo','dato'=>'0'),
                 );
                 $resp = $this->articulos->insertar($datosT,'trans_kardex',$params['id_empresa']);
             }
@@ -246,7 +246,7 @@ class ArticuloApi extends ApiEndpoint
                 array('campo'=>'existencias','dato'=>$params['cantidad']),
                 array('campo'=>'costo','dato'=>$params['precio']),
                 array('campo'=>'valor_total','dato'=>number_format($params['cantidad']*$params['costo'],2,'.','')),
-                array('campo'=>'id_factura','dato'=>'.'),
+                array('campo'=>'id_factura','dato'=>'0'),
                 array('campo'=>'detalle','dato'=>'INGRESO DE STOCK'),
                 array('campo'=>'fecha_Fab','dato'=>date('Y-m-d')),
                 array('campo'=>'fecha_Exp','dato'=>date('Y-m-d')),
@@ -255,7 +255,7 @@ class ArticuloApi extends ApiEndpoint
                 array('campo'=>'cliente','dato'=>''),
                 array('campo'=>'serie','dato'=>''),
                 array('campo'=>'empresa','dato'=>$params['id_empresa']),
-                array('campo'=>'id_ordenTrabajo','dato'=>''),
+                array('campo'=>'id_ordenTrabajo','dato'=>'0'),
             );
             // print_r($datos);die();
 

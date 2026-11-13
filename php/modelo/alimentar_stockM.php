@@ -135,7 +135,7 @@ class alimentar_stockM
     	return $this->db->datos($sql,$idempresa);
     }
 
-    function lista_kardex($idempresa,$query=false,$categoria=false,$servicio=false,$referencia=false,$id=false,$entradas=false)
+    function lista_kardex($idempresa,$query=false,$categoria=false,$servicio=false,$referencia=false,$id=false,$entradas='all')
     {
     	$sql = "SELECT T.id_kardex as id,P.nombre as producto,T.fecha,entrada,salida,existencias,costo,CONCAT(F.serie,'-',F.num_factura) as factura ,detalle,O.num_orden as orden,C.nombre as categoria,C.id_categoria
     		FROM trans_kardex T
@@ -172,7 +172,7 @@ class alimentar_stockM
 				}
 			}
 
-			if($entradas)
+			if($entradas!='all')
 			{
 				if($entradas==1)
 				{
@@ -182,7 +182,7 @@ class alimentar_stockM
 				}
 			}
 
-			$sql.="  ORDER BY  T.fecha DESC";
+			$sql.="  ORDER BY  T.id_kardex DESC";
 
 			// print_r($sql);die();
 

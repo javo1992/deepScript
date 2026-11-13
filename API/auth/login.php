@@ -31,39 +31,47 @@ class login
     {    
 
         // Valida contra tu BD. Ejemplo demo:
-        $empresa = $this->login->buscar_empresa($company);
-        if(count($empresa)>0)
-        {
-            // print_r($empresa);die();
-            $data = $this->login->login_empresa_api($empresa['id_empresa'],$company,$username,$password);
-            if(count($data)>0)
+        try {
+            
+            $empresa = $this->login->buscar_empresa($company);
+            if(count($empresa)>0)
             {
+                // print_r($empresa);die();
+                $data = $this->login->login_empresa_api($empresa['id_empresa'],$company,$username,$password);
+                if(count($data)>0)
+                {
 
-                $jwt   = new JWT($this->cfg['jwt_secret']);
-                $token = $jwt->encode([
-                    'sub'   => 1,
-                    'email' => $data[0]['email'],
-                    'company' => $data[0]['email'],
-                    'id_empresa' => $data[0]['id_empresa'],
-                    'iva_val' => $data[0]['valor_iva'],
-                    'usuario' => $username,                    
-                    'id_usuario' => $data[0]['id_usuario'],
-                    'serie' =>$data[0]['serie'],
-                    'role'  => 'admin',
-                ], $this->cfg['jwt_ttl']);
+                    $jwt   = new JWT($this->cfg['jwt_secret']);
+                    $token = $jwt->encode([
+                        'sub'   => 1,
+                        'email' => $data[0]['email'],
+                        'company' => $data[0]['email'],
+                        'id_empresa' => $data[0]['id_empresa'],
+                        'iva_val' => $data[0]['valor_iva'],
+                        'usuario' => $username,                    
+                        'id_usuario' => $data[0]['id_usuario'],
+                        'serie' =>$data[0]['serie'],
+                        'role'  => 'admin',
+                    ], $this->cfg['jwt_ttl']);
 
-                return [
-                    'success'    => true,
-                    'token'      => $token,
-                    'expires_in' => $this->cfg['jwt_ttl'],
-                ];
+                    return [
+                        'success'    => true,
+                        'token'      => $token,
+                        'expires_in' => $this->cfg['jwt_ttl'],
+                    ];
 
+                }else{
+                    // if ($email !== 'admin@demo.com' || $password !== '123456') {
+                        // http_response_code(401);
+                        return ['success' => false, 'error' => 'Credenciales inválidas'];
+                    // }
+                }      
             }else{
-                // if ($email !== 'admin@demo.com' || $password !== '123456') {
-                    http_response_code(401);
-                    return ['success' => false, 'error' => 'Credenciales inválidas'];
-                // }
-            }      
+                 return ['success' => false, 'error' => 'Ruc de empresa no encontrado'];            
+            }
+
+        } catch (Exception $e) {
+              return ['success' => false, 'error' => 'Credenciales inválidas'];            
         }
 
     }

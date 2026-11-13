@@ -36,13 +36,73 @@ class cajaM
 		return $this->db->datos($sql,$idempresa);
 	}
 
-	function buscar_caja_abierta_anteriores($idempresa,$fecha,$estado=1)
+	function buscar_caja_abierta_anteriores($idempresa,$fecha=false,$estado=1)
 	{
-		$sql = "SELECT * 
-				FROM caja 
-				WHERE id_empresa = '".$idempresa."' 
-				AND fecha_caja <> '".$fecha."' 
-				AND estado_caja = '".$estado."'";
+		$sql = "SELECT c.id_caja,c.id_usuario,fecha_caja,valor_inicial,valor_final,faltante_caja,sobrante_caja,total_egresos,total_efectivo,total_transferencias,observacion,c.id_empresa,estado_caja,nombre,COALESCE(SUM(p.valor_pago), 0) AS total
+				FROM caja c
+				INNER JOIN usuario u ON c.id_usuario = u.id_usuario 
+				LEFT JOIN pagos_caja p ON c.id_caja = p.id_caja AND p.id_empresa = c.id_empresa
+				WHERE c.id_empresa = '".$idempresa."' ";
+				if($fecha!=0)
+				{
+					$sql.=" AND fecha_caja <> '".$fecha."' ";
+				}
+				$sql.=" AND estado_caja = '".$estado."'
+				GROUP BY 
+			    c.id_caja,
+			    c.id_usuario,
+			    c.fecha_caja,
+			    c.valor_inicial,
+			    c.valor_final,
+			    c.faltante_caja,
+			    c.sobrante_caja,
+			    c.total_egresos,
+			    c.total_efectivo,
+			    c.total_transferencias,
+			    c.observacion,
+			    c.id_empresa,
+			    c.estado_caja,
+			    u.nombre;
+			    ";
+
+				// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
+	function buscar_caja($idempresa,$fecha=false,$estado='all')
+	{
+		$sql = "SELECT c.id_caja as id,c.id_usuario,fecha_caja as fechaApertura,valor_inicial as montoInicial,valor_final,faltante_caja,sobrante_caja,total_egresos,total_efectivo,total_transferencias,observacion,c.id_empresa,estado_caja as estado,nombre as responsable,COALESCE(SUM(p.valor_pago), 0) AS totalCaja
+				FROM caja c
+				INNER JOIN usuario u ON c.id_usuario = u.id_usuario 
+				LEFT JOIN pagos_caja p ON c.id_caja = p.id_caja AND p.id_empresa = c.id_empresa
+				WHERE c.id_empresa = '".$idempresa."' ";
+				if($fecha!=0)
+				{
+					$sql.=" AND fecha_caja <> '".$fecha."' ";
+				}
+				if($estado!='all')
+				{
+					$sql.=" AND estado_caja = '".$estado."' ";
+				}
+				$sql.="GROUP BY 
+			    c.id_caja,
+			    c.id_usuario,
+			    c.fecha_caja,
+			    c.valor_inicial,
+			    c.valor_final,
+			    c.faltante_caja,
+			    c.sobrante_caja,
+			    c.total_egresos,
+			    c.total_efectivo,
+			    c.total_transferencias,
+			    c.observacion,
+			    c.id_empresa,
+			    c.estado_caja,
+			    u.nombre
+			    ORDER BY c.id_caja DESC";
+
+				// print_r($sql);die();
 
 		return $this->db->datos($sql,$idempresa);
 	}

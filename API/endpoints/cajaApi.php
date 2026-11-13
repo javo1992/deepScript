@@ -74,18 +74,42 @@ class cajaApi extends ApiEndpoint
     {
         $tokenData = $this->requireUser();
         $params = array_merge($params, $tokenData);
-
-
         // print_r($params);die();
-
         $caja = $this->caja->buscar_caja_abierta_anteriores($params['id_empresa'],$params['fechaActual']);
         if(count($caja)>0)
         {
-            return array('respuesta'=>1,'fecha'=>$caja[0]['fecha_caja']);;
+            if($params['fechaActual']!=0)
+            {
+                return array('respuesta'=>1,'fecha'=>$caja[0]['fecha_caja']);
+            }else{
+                return $caja;
+            }
         }else{
             return array('respuesta'=>0,'fecha'=>'');
         }
     }
+
+    public function ListaCaja(array $params): array
+    {
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        $con_estado = 1;
+        // if($params['estado']=='all') { $params['estado'] = 0; $con_estado = 0;} 
+        // print_r($params);die();
+        $caja = $this->caja->buscar_caja($params['id_empresa'],$params['fechaActual'],$params['estado'],$con_estado);
+        // if(count($caja)>0)
+        // {
+        //     if($params['fechaActual']!=0)
+        //     {
+        //         return array('respuesta'=>1,'fecha'=>$caja[0]['fecha_caja']);
+        //     }else{
+                return $caja;
+        //     }
+        // }else{
+        //     return array('respuesta'=>0,'fecha'=>'');
+        // }
+    }
+
 
     public function cajaDetalle(array $params): array
     {
