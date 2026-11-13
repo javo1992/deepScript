@@ -42,7 +42,7 @@ class cajaApi extends ApiEndpoint
                         array('campo'=>'observacion','dato'=>$params['observacion']),
                         array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
                 );
-print_r($data);die();
+
                 $resp = $this->caja->add('caja',$data,$params['id_empresa']);
 
                 if($resp)
