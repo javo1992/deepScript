@@ -258,7 +258,7 @@ class cajaApi extends ApiEndpoint
 
                 // edita caja pagos y egresos
                 $datoscaja =  array(
-                                array('campo'=>'estado_caja','dato'=>false),
+                                array('campo'=>'estado_caja','dato'=>0),
                                 array('campo'=>'valor_final','dato'=>$params['total_caja']),
                                 array('campo'=>'faltante_caja','dato'=>$faltante),
                                 array('campo'=>'sobrante_caja','dato'=>$sobrante),
