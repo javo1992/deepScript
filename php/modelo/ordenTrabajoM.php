@@ -54,7 +54,7 @@ class ordenTrabajoM
 		return $this->db->datos($sql, $_SESSION['INICIO']['ID_EMPRESA']);
 	}
 
-	function detalle_ordenes_trabajo($idempresa,$id=false,$placa=false)
+	function detalle_ordenes_trabajo($idempresa,$id=false,$placa=false,$fecha=false)
 	{
 		$sql = "SELECT * 
 				FROM ordenes_trabajo 
@@ -69,12 +69,41 @@ class ordenTrabajoM
 					$sql.=" AND PLACA like '".$placa."%'";
 				}
 
+				if($fecha)
+				{
+					$sql.=" AND fecha = '".$fecha."'";
+				}
+
 		// print_r($sql);die();
 
 		return $this->db->datos($sql,$idempresa);
 	}
 
-	function lineas_orden_trabajo($idempresa,$orden,$id=false)
+	function detalle_ordenes_trabajo_finalizadas($idempresa,$id=false,$placa=false,$numeroOrden=false)
+	{
+		$sql = "SELECT * 
+				FROM ordenes_trabajo 
+				where estado_orden = 'F' ";
+				if($id)
+				{
+					$sql.=" AND id_orden = '".$id."'";
+				}
+
+				if($placa)
+				{
+					$sql.=" AND PLACA like '".$placa."%'";
+				}
+				if($numeroOrden)
+				{
+					$sql.=" AND num_orden = '".$numeroOrden."%'";
+				}
+
+		// print_r($sql);die();
+
+		return $this->db->datos($sql,$idempresa);
+	}
+
+	function lineas_orden_trabajo($idempresa,$orden,$id=false,$TC=false)
 	{
 		$sql = "SELECT L.*,C.nombre as categoria
 				FROM lineas_orden_trabajo L 
@@ -84,6 +113,10 @@ class ordenTrabajoM
 				if($id)
 				{
 					$sql.=" AND id_lineas = '".$id."'";
+				}
+				if($TC)
+				{
+					$sql.=" AND TC = '".$TC."'";
 				}
 		$sql.=" order by id_lineas desc";
 

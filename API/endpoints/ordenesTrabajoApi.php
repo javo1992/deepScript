@@ -41,15 +41,18 @@ class ordenesTrabajoApi extends ApiEndpoint
     {
         if(!isset($params['id'])){ return 'no se encontro el id'; }
         $tokenData = $this->requireUser();
+        // print_r($params);die();
         $params = array_merge($params, $tokenData);
         $id = false;
         $placa = false;
+        $fecha = false;
 
         if($params['id']!=0) {$id = $params['id'];} 
         if($params['placa']!=0) {$placa = $params['placa'];} 
+        if($params['fecha']!=0) {$fecha = $params['fecha'];} 
 
         // print_r($params);die();
-        return $this->ordenT->detalle_ordenes_trabajo($params['id_empresa'],$id,$placa);
+        return $this->ordenT->detalle_ordenes_trabajo($params['id_empresa'],$id,$placa,$fecha);
 
     }
 
@@ -67,7 +70,7 @@ class ordenesTrabajoApi extends ApiEndpoint
         $placa = $this->ordenT->lista_ordenes_trabajo($params['id_empresa'],$params['fecha'],$params['placa']);
         if(count($placa)==0)
         {
-            $data = $this->secuenciales->numero_secuencial($params['id_empresa'],'OR_SERIE_001001','OR',1);
+            $data = $this->secuenciales->numero_secuencial($params['id_empresa'],'OR_SERIE_001001','OR',$params['serie'],1);
             $datos = array( 
                             array('campo'=>"placa",'dato'=>$params['placa']),
                             array('campo'=>"fecha",'dato'=>$params['fecha']),
@@ -78,6 +81,7 @@ class ordenesTrabajoApi extends ApiEndpoint
                             array('campo'=>"encargado",'dato'=>$params['propietario']),
                             array('campo'=>"telefono_encargado",'dato'=>$params['telefono']),
                             array('campo'=>"modelo_marca",'dato'=>$params['modelo']),
+                            array('campo'=>"TC",'dato'=>'OR'),
                         );
             $dat = $this->ordenT->add('ordenes_trabajo',$datos,$params['id_empresa']);
             return $dat;
@@ -118,6 +122,7 @@ class ordenesTrabajoApi extends ApiEndpoint
                         array('campo'=>"id_orden",'dato'=>$params['orden']),
                         array('campo'=>"referencia",'dato'=>$params['referencia']),
                         array('campo'=>"descuento",'dato'=>$descuento),
+                        array('campo'=>"TC",'dato'=>isset($params['TC']) ? $params['TC'] : 'OR'),
                     );
         return $this->ordenT->add('lineas_orden_trabajo',$datos,$params['id_empresa']);
         // print_r($params);die();
@@ -364,6 +369,124 @@ class ordenesTrabajoApi extends ApiEndpoint
         }
     }
 
+     public function finalizarOrdenTemp(array $params)
+    {
+        if(!isset($params['orden'])) { return 'enviar numero de orden';}
+        if(!isset($params['tipoPago'])) { return 'enviar tipoPago de la orden';}
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+
+        // print_r($params);die();
+
+        try {
+               $numsec = $this->secuenciales->numero_secuencial($params['id_empresa'],'OR_SERIE_'.str_replace('-','',$params['serie']),'OR',$params['serie'],1);
+
+               $lineas = $this->ordenT->lineas_orden_trabajo($params['id_empresa'],$params['orden'],false,'ORT');
+               // print_r($params);die();
+                $total = 0; $subtotal = 0; $valor_iva = 0;
+                $sin_iva = 0;
+                $con_iva = 0;
+                foreach ($lineas as $key => $value) {
+
+                    $total+= $value['total'];
+                    $subtotal+= $value['subtotal'];
+                    $valor_iva+=$value['iva'];
+
+                    if($value['iva']==0)
+                    {
+                        $sin_iva+= $value['subtotal'];
+                    }else{
+                        $con_iva+= $value['subtotal'];
+                    }
+                }
+
+                // edita orden de trabajo y finaliza
+                $datos =  array(
+                                array('campo'=>'estado_pago','dato'=>1),
+                                array('campo'=>'estado_orden','dato'=>'F'),
+                                array('campo'=>'Sin_iva','dato'=>$sin_iva),
+                                array('campo'=>'Porc_IVA','dato'=>($params['iva_val']/100)),
+                                array('campo'=>'Con_IVA','dato'=>$con_iva),
+                                array('campo'=>'total','dato'=>$total),
+                                array('campo'=>'subtotal','dato'=>$subtotal),
+                                array('campo'=>'iva','dato'=>$valor_iva),
+                                array('campo'=>'Tipo_pago','dato'=>$params['tipoPago']),
+                                array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                                array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
+                                array('campo'=>'num_orden','dato'=>$numsec[0]['numero']),
+                                array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                                array('campo'=>'TC','dato'=>'ORT')
+                            );
+                $resp = $this->ordenT->add('ordenes_trabajo',$datos,$params['id_empresa']);
+
+                $ordenDet = $this->ordenT->detalle_ordenes_trabajo_finalizadas($params['id_empresa'],false,false,$numsec[0]['numero']);
+
+                $lineaData = array(
+                                array('campo'=>'id_orden','dato'=>$ordenDet[0]['id_orden']),
+                                array('campo'=>'TC','dato'=>'OR'),
+                            );
+                $lineasWhere = array(
+                                array('campo'=>'id_orden','dato'=>$params['orden']),
+                                array('campo'=>'TC','dato'=>'ORT'),
+                            );
+                $this->ordenT->update('lineas_orden_trabajo',$lineaData,$lineasWhere,$params['id_empresa']);
+
+
+                $data = array(
+                        array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                        array('campo'=>'valor_pago','dato'=>$total),
+                        array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                        array('campo'=>'estado','dato'=>1),
+                        array('campo'=>'detalle','dato'=>'Pago orden rapida :'.$numsec[0]['numero']),
+                        array('campo'=>'id_caja','dato'=>$params['caja']),
+                        array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
+                        array('campo'=>'id_factura','dato'=>null),
+                        array('campo'=>'id_orden','dato'=>$params['orden']),
+                        array('campo'=>'forma_pago','dato'=>$params['tipoPago']),
+                );
+
+                $resp = $this->ordenT->add('pagos_caja',$data,$params['id_empresa']);
+
+                
+                // ingresa kardex de salida
+                foreach ($lineas as $key => $value) {
+                    // print_r($value);die();
+                    $producto = $this->articulos->articulo_stock_precio_venta($params['id_empresa'],$query=false,$categoria=false,$servicio=0,$value['referencia'],$id=false);
+                    $datos =  array(
+                        array('campo'=>'id_producto','dato'=>$producto[0]['id_productos']),
+                        array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                        array('campo'=>'TP','dato'=>'CD'),
+                        array('campo'=>'entrada','dato'=>0),
+                        array('campo'=>'salida','dato'=>$value['cantidad']),
+                        array('campo'=>'valor_unitario','dato'=>$value['precio_uni']),
+                        array('campo'=>'total_iva','dato'=>$value['iva']),
+                        array('campo'=>'subtotal','dato'=>$value['subtotal']),
+                        array('campo'=>'existencias','dato'=>($producto[0]['stock']-1)),
+                        array('campo'=>'costo','dato'=>$value['precio_uni']),
+                        array('campo'=>'valor_total','dato'=>$value['total']),
+                        array('campo'=>'id_factura','dato'=>'.'),
+                        array('campo'=>'detalle','dato'=>'SALIDA DE STOCK POR ORDEN DE TRABAJO:'.$ordenDet[0]['num_orden']),
+                        array('campo'=>'fecha_Fab','dato'=>date('Y-m-d')),
+                        array('campo'=>'fecha_Exp','dato'=>date('Y-m-d')),
+                        array('campo'=>'usuario','dato'=>$params['id_usuario']),
+                        array('campo'=>'proveedor','dato'=>''),
+                        array('campo'=>'cliente','dato'=>''),
+                        array('campo'=>'serie','dato'=>''),
+                        array('campo'=>'empresa','dato'=>$params['id_empresa']),
+                        array('campo'=>'id_ordenTrabajo','dato'=>$ordenDet[0]['id_orden']),
+                    );
+
+                    $this->ordenT->add('trans_kardex',$datos,$params['id_empresa']);
+                }
+
+                return array('respuesta'=>1,'mensaje'=>'orden finalizada');  
+            } catch (Exception $e) {
+
+                return array('respuesta'=>-1,'mensaje'=>$e);        
+        
+        }
+    }
+
     public function finalizarOrdenFac(array $params)
     {
         if(!isset($params['orden'])) { return 'enviar numero de orden';}
@@ -448,9 +571,9 @@ class ordenesTrabajoApi extends ApiEndpoint
 
                 $where =  array(array('campo'=>'id_orden','dato'=>$params['orden']));
                 $resp = $this->ordenT->update('ordenes_trabajo',$datosOrd,$where,$params['id_empresa']);
-// print_r('expression');die();
+                // print_r('expression');die();
                 // generar factura
-                $numsec = $this->secuenciales->numero_secuencial($params['id_empresa'],'FA_SERIE_'.str_replace('-','',$params['serie']),'FA',1);
+                $numsec = $this->secuenciales->numero_secuencial($params['id_empresa'],'FA_SERIE_'.str_replace('-','',$params['serie']),'FA',$params['serie'],1);
                 $datosFac = array(
                             array('campo'=>'Sin_iva','dato'=>$sin_iva),
                             array('campo'=>'Porc_IVA','dato'=>($params['iva_val']/100)),
@@ -479,7 +602,7 @@ class ordenesTrabajoApi extends ApiEndpoint
                 $parametros = array('numfac'=>$numsec[0]['numero'],'serie'=>$params['serie'],'id_empresa'=>$params['id_empresa']);
                 $fact = $this->facturas->lista_facturas_api($parametros);
 
-// print_r($fact);die();
+            // print_r($fact);die();
 
 
                   //ingresa el pago 
@@ -527,6 +650,222 @@ class ordenesTrabajoApi extends ApiEndpoint
                         array('campo'=>'serie','dato'=>''),
                         array('campo'=>'empresa','dato'=>$params['id_empresa']),
                         array('campo'=>'id_ordenTrabajo','dato'=>$params['orden']),
+                    );
+                    $this->ordenT->add('trans_kardex',$datos,$params['id_empresa']);
+
+
+                    // para lista de facturas
+                    $datos =  array(
+                            array('campo'=>'producto','dato'=>$producto[0]['nombre']),
+                            array('campo'=>'cantidad','dato'=>$value['cantidad']),
+                            array('campo'=>'precio_uni','dato'=>$value['precio_uni']),
+                            array('campo'=>'porc_descuento','dato'=>0),
+                            array('campo'=>'descuento','dato'=>0),
+                            array('campo'=>'iva','dato'=>$value['iva']),
+                            array('campo'=>'total','dato'=>$value['total']),
+                            array('campo'=>'id_factura','dato'=>$fact[0]['id']),
+                            array('campo'=>'referencia','dato'=>$producto[0]['referencia']),
+                            array('campo'=>'porc_iva','dato'=>($params['iva_val']/100)),
+                            array('campo'=>'Serie_No','dato'=>$params['serie']),
+                            array('campo'=>'subtotal','dato'=>$value['subtotal']),
+                            array('campo'=>'id_guiaRemi','dato'=>''),
+                            array('campo'=>'observacion' ,'dato'=>''),
+                        );
+                    $this->ordenT->add('lineas_factura',$datos,$params['id_empresa']);
+
+                }
+
+                return array('respuesta'=>1,'mensaje'=>'orden finalizada');  
+            } catch (Exception $e) {
+
+                return array('respuesta'=>-1,'mensaje'=>$e);        
+        
+        }
+    }
+
+    public function finalizarOrdenFacTemp(array $params)
+    {
+        if(!isset($params['orden'])) { return 'enviar numero de orden';}
+        if(!isset($params['tipoPago'])) { return 'enviar tipoPago de la orden';}
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        // print_r($params);die();
+
+        try {
+
+                $cliente = $this->cliente->lista_clientes_all_api($params['id_empresa'],false,$params['CI'],false);
+                if(count($cliente)>0)
+                {
+                    $datosCli =  array(
+                                array('campo'=>'nombre','dato'=>$params['nombre']),
+                                array('campo'=>'Razon_Social','dato'=>$params['nombre']),
+                                array('campo'=>'tipo','dato'=>'C'),
+                                array('campo'=>'telefono','dato'=>$params['telefono']),
+                                array('campo'=>'mail','dato'=>$params['email']),
+                                array('campo'=>'direccion','dato'=>$params['direccion']),
+                                array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                                array('campo'=>'estado','dato'=>'A'),
+                            );
+
+                    $where =  array(array('campo'=>'ci_ruc','dato'=>$params['CI']),array('campo'=>'id_empresa','dato'=>$params['id_empresa']));
+                    $resp = $this->ordenT->update('cliente',$datosCli,$where,$params['id_empresa']);
+
+                }else{
+                    $datosCli =  array(
+                                array('campo'=>'nombre','dato'=>$params['nombre']),
+                                array('campo'=>'ci_ruc','dato'=>$params['CI']),
+                                array('campo'=>'Razon_Social','dato'=>$params['nombre']),
+                                array('campo'=>'tipo','dato'=>'C'),
+                                array('campo'=>'telefono','dato'=>$params['telefono']),
+                                array('campo'=>'mail','dato'=>$params['email']),
+                                array('campo'=>'direccion','dato'=>$params['direccion']),
+                                array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                                array('campo'=>'estado','dato'=>'A'),
+                            );
+                    $resp = $this->ordenT->add('cliente',$datosCli,$params['id_empresa']);
+                }            
+
+                $cliente = $this->cliente->lista_clientes_all_api($params['id_empresa'],false,$params['CI'],false);
+
+               // print_r($cliente);die();
+
+                $numsec = $this->secuenciales->numero_secuencial($params['id_empresa'],'OR_SERIE_'.str_replace('-','',$params['serie']),'OR',$params['serie'],1);
+                
+
+                // $ordenDet = $this->ordenT->detalle_ordenes_trabajo($params['id_empresa'],$params['orden']);
+                // print_r($ordenDet);die();
+                $lineas = $this->ordenT->lineas_orden_trabajo($params['id_empresa'],$params['orden']);
+               // print_r($params);die();
+                $total = 0; $subtotal = 0; $valor_iva = 0;
+                $sin_iva = 0;
+                $con_iva = 0;
+                foreach ($lineas as $key => $value) {
+
+                    $total+= $value['total'];
+                    $subtotal+= $value['subtotal'];
+                    $valor_iva+=$value['iva'];
+
+                    if($value['iva']==0)
+                    {
+                        $sin_iva+= $value['subtotal'];
+                    }else{
+                        $con_iva+= $value['subtotal'];
+                    }
+                }
+
+
+                // edita orden de trabajo y finaliza
+                $datosOrd =  array(
+                                array('campo'=>'estado_pago','dato'=>1),
+                                array('campo'=>'estado_orden','dato'=>'F'),
+                                array('campo'=>'Sin_iva','dato'=>$sin_iva),
+                                array('campo'=>'Porc_IVA','dato'=>($params['iva_val']/100)),
+                                array('campo'=>'Con_IVA','dato'=>$con_iva),
+                                array('campo'=>'total','dato'=>$total),
+                                array('campo'=>'subtotal','dato'=>$subtotal),
+                                array('campo'=>'iva','dato'=>$valor_iva),
+                                array('campo'=>'Tipo_pago','dato'=>$params['tipoPago']),
+                                array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                                array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
+                                array('campo'=>'num_orden','dato'=>$numsec[0]['numero']),
+                                array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                                array('campo'=>'TC','dato'=>'ORT')
+                            );
+                $resp = $this->ordenT->add('ordenes_trabajo',$datosOrd,$params['id_empresa']);
+
+                $ordenDet = $this->ordenT->detalle_ordenes_trabajo_finalizadas($params['id_empresa'],false,false,$numsec[0]['numero']);
+
+                $lineaData = array(
+                                array('campo'=>'id_orden','dato'=>$ordenDet[0]['id_orden']),
+                                array('campo'=>'TC','dato'=>'OR'),
+                            );
+                $lineasWhere = array(
+                                array('campo'=>'id_orden','dato'=>$params['orden']),
+                                array('campo'=>'TC','dato'=>'ORT'),
+                            );
+                $this->ordenT->update('lineas_orden_trabajo',$lineaData,$lineasWhere,$params['id_empresa']);
+
+
+
+                // print_r('expression');die();
+                // generar factura
+                $numsec = $this->secuenciales->numero_secuencial($params['id_empresa'],'FA_SERIE_'.str_replace('-','',$params['serie']),'FA',$params['serie'],1);
+                $datosFac = array(
+                            array('campo'=>'Sin_iva','dato'=>$sin_iva),
+                            array('campo'=>'Porc_IVA','dato'=>($params['iva_val']/100)),
+                            array('campo'=>'Con_IVA','dato'=>$con_iva),
+                            array('campo'=>'total','dato'=>$total),
+                            array('campo'=>'subtotal','dato'=>$subtotal),
+                            array('campo'=>'iva','dato'=>$valor_iva),
+                            array('campo'=>'Tipo_pago','dato'=>$params['tipoPago']),
+                            array('campo'=>'num_factura','dato'=>$numsec[0]['numero'] ),
+                            array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                            array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
+                            array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                            array('campo'=>'id_cliente','dato'=>$cliente[0]['id'] ),
+                            array('campo'=>'serie','dato'=>$params['serie']),
+                            array('campo'=>'Autorizacion','dato'=>'123456789'),
+                            array('campo'=>'Propina','dato'=>0),
+                            array('campo'=>'Clave_Acceso','dato'=>'123456789'),
+                            array('campo'=>'estado_factura','dato'=>'P'),
+                            array('campo'=>'id_pedido','dato'=>$params['orden']),
+                            array('campo'=>'datos_adicionales','dato'=>''),
+                            array('campo'=>'estado_pago','dato'=>1),
+                        );
+
+
+                $this->ordenT->add('facturas',$datosFac,$params['id_empresa']);
+                $parametros = array('numfac'=>$numsec[0]['numero'],'serie'=>$params['serie'],'id_empresa'=>$params['id_empresa']);
+                $fact = $this->facturas->lista_facturas_api($parametros);
+
+// print_r($fact);die();
+
+
+                  //ingresa el pago 
+
+                $data = array(
+                        array('campo'=>'id_empresa','dato'=>$params['id_empresa']),
+                        array('campo'=>'valor_pago','dato'=>$total),
+                        array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                        array('campo'=>'estado','dato'=>1),
+                        array('campo'=>'detalle','dato'=>'Pago  venta rapida :'.$ordenDet[0]['num_orden']),
+                        array('campo'=>'id_caja','dato'=>$params['caja']),
+                        array('campo'=>'id_usuario','dato'=>$params['id_usuario']),
+                        array('campo'=>'id_factura','dato'=>$fact[0]['id']),
+                        array('campo'=>'id_orden','dato'=>$params['orden']),
+                        array('campo'=>'forma_pago','dato'=>$params['tipoPago']),
+                );
+
+                $resp = $this->ordenT->add('pagos_caja',$data,$params['id_empresa']);
+
+
+                
+                // ingresa kardex de salida
+                foreach ($lineas as $key => $value) {
+                    // print_r($value);die();
+                    $producto = $this->articulos->articulo_stock_precio_venta($params['id_empresa'],$query=false,$categoria=false,$servicio=0,$value['referencia'],$id=false);
+                    $datos =  array(
+                        array('campo'=>'id_producto','dato'=>$producto[0]['id_productos']),
+                        array('campo'=>'fecha','dato'=>date('Y-m-d')),
+                        array('campo'=>'TP','dato'=>'CD'),
+                        array('campo'=>'entrada','dato'=>0),
+                        array('campo'=>'salida','dato'=>$value['cantidad']),
+                        array('campo'=>'valor_unitario','dato'=>$value['precio_uni']),
+                        array('campo'=>'total_iva','dato'=>$value['iva']),
+                        array('campo'=>'subtotal','dato'=>$value['subtotal']),
+                        array('campo'=>'existencias','dato'=>($producto[0]['stock']-1)),
+                        array('campo'=>'costo','dato'=>$value['precio_uni']),
+                        array('campo'=>'valor_total','dato'=>$value['total']),
+                        array('campo'=>'id_factura','dato'=>$fact[0]['id']),
+                        array('campo'=>'detalle','dato'=>'SALIDA DE STOCK POR FACTURA:'.$params['serie'].' - '.$numsec[0]['numero']),
+                        array('campo'=>'fecha_Fab','dato'=>date('Y-m-d')),
+                        array('campo'=>'fecha_Exp','dato'=>date('Y-m-d')),
+                        array('campo'=>'usuario','dato'=>1),
+                        array('campo'=>'proveedor','dato'=>''),
+                        array('campo'=>'cliente','dato'=>''),
+                        array('campo'=>'serie','dato'=>''),
+                        array('campo'=>'empresa','dato'=>$params['id_empresa']),
+                        array('campo'=>'id_ordenTrabajo','dato'=>$ordenDet[0]['id_orden']),
                     );
                     $this->ordenT->add('trans_kardex',$datos,$params['id_empresa']);
 

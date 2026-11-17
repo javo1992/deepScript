@@ -53,7 +53,7 @@ class secuencialesM
 	    $rest = $this->db->delete($tabla,$datos,$empresa);
 		return $rest;
 	}
-	function numero_secuencial($id_empresa,$query,$tipo,$aumentar=false)
+	function numero_secuencial($id_empresa,$query,$tipo,$serie='001001',$aumentar=false)
 	{
 		$sql = "SELECT * 
 				FROM codigos_secuenciales 
@@ -82,12 +82,50 @@ class secuencialesM
 							array('campo'=>'id_empresa','dato'=>$id_empresa),
 							array('campo'=>'detalle_secuencial','dato'=>$query),
 							array('campo'=>'tipo','dato'=>$tipo),
+							array('campo'=>'Serie','dato'=>$serie),
 						);
 
 			 $rest = $this->db->inserts('codigos_secuenciales',$datos,$id_empresa);
 		}
 		
 		$datos = $this->db->datos($sql,$id_empresa);
+		return $datos;
+	}
+
+	function lista_secuencial($id_empresa,$id=false,$query=false,$serie=false)
+	{
+		$sql = "SELECT id_secuenciales,detalle_secuencial,numero,id_empresa,Autorizacion,Serie,tipo
+				FROM codigos_secuenciales 
+				WHERE id_empresa = '".$id_empresa."' ";
+				if($id)
+				{
+					$sql.=" AND id_secuenciales = '".$id."'";
+				}
+				if($query)
+				{
+					$sql.=" AND detalle_secuencial ='".$query."' ";
+				}
+				if($serie)
+				{
+					$sql.=" AND Serie ='".$serie."' ";
+				}
+		// print_r($sql);die();
+
+		$datos = $this->db->datos($sql,$id_empresa);
+
+		// if(count($datos)==0)
+		// {
+			
+		// 	$datos = array( array('campo'=>'numero','dato'=>1),
+		// 					array('campo'=>'id_empresa','dato'=>$id_empresa),
+		// 					array('campo'=>'detalle_secuencial','dato'=>$query),
+		// 					array('campo'=>'tipo','dato'=>'OT'),
+		// 				);
+
+		// 	 $rest = $this->db->inserts('codigos_secuenciales',$datos,$id_empresa);
+		// 	 return $this->db->datos($sql,$id_empresa);
+		// }
+
 		return $datos;
 	}
 }
