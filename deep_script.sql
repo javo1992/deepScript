@@ -105,7 +105,8 @@ INSERT INTO `accesos_empresa` VALUES (288, 51, 42, 53);
 INSERT INTO `accesos_empresa` VALUES (289, 52, 42, 53);
 INSERT INTO `accesos_empresa` VALUES (290, 55, 42, 53);
 INSERT INTO `accesos_empresa` VALUES (291, 50, 7, 22);
-
+INSERT INTO `accesos_empresa` VALUES (292, 61, 7, 22);
+INSERT INTO `accesos_empresa` VALUES (293, 62, 7, 22);
 -- ----------------------------
 -- Table structure for caja
 -- ----------------------------
@@ -7770,7 +7771,6 @@ INSERT INTO `menu` VALUES (45, '5.30', 'Lista de facturas', 'lista_facturas.php'
 INSERT INTO `menu` VALUES (46, '5.40', 'Lista de retenciones', 'lista_retenciones.php', NULL);
 INSERT INTO `menu` VALUES (47, '5.50', 'Lista nota de credito', 'lista_nota_credito.php', NULL);
 INSERT INTO `menu` VALUES (48, '5.60', 'lista guias de remision', 'lista_guia.php', NULL);
-INSERT INTO `menu` VALUES (50, '5.70', 'Ordenes de trabajo', 'ordenes_trabajo.php', NULL);
 INSERT INTO `menu` VALUES (49, '3', 'Cliente -  Proveedor', '', '<i class=\'fas fa-user  m-2\'></i>');
 INSERT INTO `menu` VALUES (51, '3.10', 'Clientes', 'cliente.php', NULL);
 INSERT INTO `menu` VALUES (52, '3.20', 'Proveedores', 'proveedores.php', NULL);
@@ -7778,7 +7778,9 @@ INSERT INTO `menu` VALUES (53, '7', 'Carga de datos', '', '<i class=\'fas fa-dat
 INSERT INTO `menu` VALUES (54, '7.10', 'Subir datos', 'subir_datos.php', NULL);
 INSERT INTO `menu` VALUES (55, '2.50', 'Secuenciales', 'secuenciales.php', NULL);
 INSERT INTO `menu` VALUES (56, '5.2', 'Lista Liquida. compras', 'lista_liquidacion.php', NULL);
-
+INSERT INTO `menu` VALUES (60, '8', 'Menus listados', '', '<i class=\'fas fa-database  m-2\'></i>');
+INSERT INTO `menu` VALUES (61, '8.10', 'Ordenes de trabajo', 'ordenes_trabajo.php', NULL);
+INSERT INTO `menu` VALUES (62, '8.20', 'Inventario', 'inventario.php', NULL);
 -- ----------------------------
 -- Table structure for mesa
 -- ----------------------------
