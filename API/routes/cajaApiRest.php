@@ -10,6 +10,7 @@ return [
         '/cajaDetalle/{fechaActual}/{estado}' => ['endpoint' => 'cajaApi','action'   => 'cajaDetalle','auth'     => 'required', ],
         '/CajadetalleCierre/{idcaja}' => ['endpoint' => 'cajaApi','action'   => 'CajadetalleCierre','auth'     => 'required', ],
         '/ListaCaja/{fechaActual}/{estado}' => ['endpoint' => 'cajaApi','action'   => 'ListaCaja','auth'     => 'required', ],
+        '/listaEgresos/{idcaja}' => ['endpoint' => 'cajaApi','action'   => 'listaEgresos','auth'     => 'required', ],
     ],
 
     'PUT' => [
@@ -21,11 +22,7 @@ return [
     ],
 
     'DELETE' => [
-        '/articulo/{id}' => [
-            'endpoint' => 'ArticuloDelete',
-            'action'   => 'destroy',
-            'auth'     => 'required',
-        ],
+        '/deleteEgreso/{id}' => [ 'endpoint' => 'cajaApi',    'action'   => 'deleteEgreso',    'auth'     => 'required',],
     ],
 ];
 

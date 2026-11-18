@@ -308,4 +308,33 @@ class cajaApi extends ApiEndpoint
             return $resp;
     }
 
+    public function listaEgresos(array $params)
+    {
+
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+
+        if(!isset($params['idcaja'])) {return array('respuesta'=>-1,'msj'=>'id de caja no encontrado');}
+
+        $data = $this->caja->lista_egresos($params['id_empresa'],$params['idcaja']);
+        return $data;
+
+        print_r($params);die();
+
+    }
+
+    public function deleteEgreso(array $params)
+    {
+
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        $datos = array( 
+                        array('campo'=>"id_pagos",'dato'=>$params['id']),
+                    );
+        return $this->caja->delete('egresos_caja',$datos,$params['id_empresa']);     
+
+
+        print_r($params);die();
+    }
+
 }
