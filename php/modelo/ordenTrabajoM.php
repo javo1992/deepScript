@@ -25,17 +25,48 @@ class ordenTrabajoM
 		return $this->db->delete($tabla,$datos,$id_empresa);
 	}
 
-	function lista_ordenes_trabajo($idempresa,$fecha,$placa=false)
+	function lista_ordenes_trabajo($idempresa,$estado = 'P',$fecha=false,$placa=false)
 	{
 		$sql = "SELECT * 
 				FROM ordenes_trabajo 
-				where fecha = '".$fecha."' 
-				AND estado_orden <> 'F'";
+				where id_empresa = ".$idempresa."
+				AND estado_orden <> '".$estado."'";
+				if($fecha)
+				{
+					$sql.=" AND fecha = '".$fecha."'";
+				} 
 				if($placa)
 				{
 					$sql.=" AND placa like '".$placa."%'";
 				}
+			// print_r($sql);die();
+		return $this->db->datos($sql,$idempresa);
+	}
 
+	function lista_ordenes_trabajo_all($idempresa,$estado =false,$fecha=false,$placa=false,$id=false)
+	{
+		$sql = "SELECT * 
+				FROM ordenes_trabajo 
+				where id_empresa = ".$idempresa."";
+				if($estado)
+				{
+					$sql.=" AND estado_orden = '".$estado."'";
+				}
+				if($fecha)
+				{
+					$sql.=" AND fecha = '".$fecha."'";
+				} 
+				if($placa)
+				{
+					$sql.=" AND placa like '".$placa."%'";
+				}
+				if($id)
+				{
+					$sql.=" AND id_orden = '".$id."'";
+				}
+
+				$sql.=" ORDER BY id_orden DESC";
+			// print_r($sql);die();
 		return $this->db->datos($sql,$idempresa);
 	}
 

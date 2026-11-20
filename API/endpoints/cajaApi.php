@@ -332,9 +332,21 @@ class cajaApi extends ApiEndpoint
                         array('campo'=>"id_pagos",'dato'=>$params['id']),
                     );
         return $this->caja->delete('egresos_caja',$datos,$params['id_empresa']);     
-
-
         print_r($params);die();
+    }
+
+    public function cajaMontoInicial(array $params)
+    {
+
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        $datos = array( 
+                        array('campo'=>"valor_inicial",'dato'=>$params['inicio']),
+                    );
+        $where = array( 
+                        array('campo'=>"id_caja",'dato'=>$params['id']),
+                    );
+        return $this->caja->update('caja',$datos,$where,$params['id_empresa']);
     }
 
 }

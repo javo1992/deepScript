@@ -3,6 +3,7 @@ return [
     
     'POST' => [ '/articulo' => ['endpoint' => 'ArticuloApi','action'   => 'addArticulo','auth'     => 'required',   ],
                 '/aliStock/{id}' => ['endpoint' => 'ArticuloApi','action'   => 'aliStock','auth'     => 'required',   ],
+                '/addfotoArt/{id}' => ['endpoint' => 'ArticuloApi','action'   => 'addfotoArt','auth'     => 'required',   ],
     
     ],
     'GET' => [

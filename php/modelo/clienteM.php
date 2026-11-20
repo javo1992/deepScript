@@ -135,7 +135,8 @@ class clienteM
 
 		$sql = "SELECT id_cliente as 'id',nombre,ci_ruc,telefono,mail,direccion,Razon_Social as 'razon',foto,estado 
 				FROM cliente 
-				WHERE id_empresa='".$idempresa."' ";
+				WHERE id_empresa='".$idempresa."' 
+				AND tipo = 'C'";
 		if($id)
 		{
 			$sql.=" AND id_cliente = '".$id."'";
@@ -152,7 +153,6 @@ class clienteM
 		// print_r($sql);die();
 		return $this->db->datos($sql,$idempresa);
 	}
-	
 }
 
 

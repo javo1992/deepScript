@@ -11,7 +11,9 @@ return [
     ],
 
 'GET' => [
-    '/ordenesTrabajo' => [ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'listarOrdenes', 'auth'     => 'required', ],  
+    '/ordenesTrabajo' => [ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'listarOrdenes', 'auth'     => 'required', ], 
+    '/ordenesTrabajoF/{fecha}/{placa}/{estado}' => [ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'listarOrdenes_finalizadas', 'auth'     => 'required', ],  
+    '/ordenesTrabajoAll/{orden}' => [ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'ordenesTrabajoAll', 'auth'     => 'required', ], 
     '/detalleOrdenes/{id}/{placa}/{fecha}' =>[ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'detalleOrdenes','auth'     => 'required', ],
     '/lineasOrdenes/{orden}/{TC}' =>[ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'lineasOrdenes','auth'     => 'required', ],
     '/finalizarOrden/{orden}/{tipoPago}/{caja}' =>[ 'endpoint' => 'ordenesTrabajoApi', 'action'   => 'finalizarOrden','auth'     => 'required', ],  

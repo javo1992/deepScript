@@ -27,7 +27,7 @@ class lista_articulosM
 		return $rest;
 	}
 
-	function update($datos,$tabla,$where,$idempresa=false)
+	function update($datos,$tabla='productos',$where,$idempresa=false)
 	{
 		if(!$idempresa){ $idempresa = $_SESSION['INICIO']['ID_EMPRESA']; }
 		 $rest = $this->db->update('productos',$datos,$where,$idempresa);	   
@@ -235,7 +235,8 @@ class lista_articulosM
 					    P.max,
 					    P.min,
 					    P.uni_medida,
-					    P.servicio
+					    P.servicio,
+					    P.foto
 
 					FROM productos P
 					LEFT JOIN trans_kardex TK 

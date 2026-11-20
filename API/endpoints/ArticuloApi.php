@@ -94,10 +94,12 @@ class ArticuloApi extends ApiEndpoint
                 $resp = $this->articulos->insertar($data,'productos',$params['id_empresa']);
                 if($resp)
                 {
+                    $idprodu = 0;
                     if($params['tipo']=="1")
                     {
                         // ingresa en kardex
                         $producto = $this->articulos->articulo_stock_precio_venta($params['id_empresa'],$query=false,$categoria=false,$servicio=0,$params['referencia'],$id=false);
+                        $idprodu = $producto[0]['id_productos'];
                         $datosT =  array(
                             array('campo'=>'id_producto','dato'=>$producto[0]['id_productos']),
                             array('campo'=>'fecha','dato'=>date('Y-m-d')),
@@ -125,7 +127,7 @@ class ArticuloApi extends ApiEndpoint
 
                         $resp = $this->articulos->insertar($datosT,'trans_kardex',$params['id_empresa']);
                     }
-                    return array('respuesta'=>1,'mensaje'=>"articulo agregado");
+                    return array('respuesta'=>1,'mensaje'=>"articulo agregado",'id_producto'=>$idprodu);
                 }
                 else{
                     return array('respuesta'=>-1,'mensaje'=>"error articulo agregado");
@@ -137,10 +139,8 @@ class ArticuloApi extends ApiEndpoint
 
     public function update(array $params): array
     {
-        // print_r($params);die();
         $tokenData = $this->requireUser();
         $params = array_merge($params, $tokenData);
-
         $sucursal = $this->sucursal->lista_sucursales($query=false,$params['id_empresa']);
 
         $data = array(
@@ -185,6 +185,70 @@ class ArticuloApi extends ApiEndpoint
         }else{
             print_r($resp);
             return array('respuesta'=>-1,'mensaje'=>"no se pudo editar ");
+        }
+    }
+
+    public function addfotoArt(array $params)
+    {
+        // print_r($_FILES);
+        // print_r($params);die();
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+
+        $directorioDestino =  dirname(__DIR__,2)."/php/img/articulos/";
+        $rutaRelativa = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/deepScript/php/img/articulos/';
+
+        // print_r($_SERVER);die();
+
+        // Verificar si la carpeta existe, si no, crearla
+        if (!file_exists($directorioDestino)) {
+            mkdir($directorioDestino, 0777, true);
+        }
+
+        // Verificar si la carpeta existe, si no, crearla
+        if (!file_exists($directorioDestino)) {
+            mkdir($directorioDestino, 0777, true);
+        }
+
+        // print_r($params);
+        // print_r($_FILES);die();
+
+        // Comprobar si se ha enviado un archivo con el campo 'foto' (el mismo nombre que usaste en FormData.append('foto', ...))
+        if (isset($_FILES['foto'])) {
+            $archivo = $_FILES['foto'];
+            
+            // Validar errores de subida
+            if ($archivo['error'] === UPLOAD_ERR_OK) {
+                $nombreTemporal = $archivo['tmp_name'];
+                $nombreOriginal = explode('.',basename($archivo['name']));
+                
+                // Opcional: Generar un nombre único para evitar que se sobrescriban archivos con el mismo nombre
+                $nombreUnico = $params['referencia'].'_'.$params['id']. "." . $nombreOriginal[1];
+                $rutaCompleta = $directorioDestino . $nombreUnico;
+                $rutaCompletaRela = $rutaRelativa.$nombreUnico;
+
+                // Mover el archivo desde la ruta temporal del servidor a tu carpeta definitiva
+                if (move_uploaded_file($nombreTemporal, $rutaCompleta)) {
+                    // Éxito al guardar
+
+                     $datosFo =  array(
+                            array('campo'=>'foto','dato'=>$rutaCompletaRela),
+                        );                     
+                     $whereF =  array(
+                            array('campo'=>'id_productos','dato'=>$params['id']),
+                        );
+                    $this->articulos->update($datosFo,'productos',$whereF,$params['id_empresa']);
+                    return array("respuesta" => 1,"mensaje" => "Imagen guardada correctamente", "ruta" => $rutaCompleta);
+
+                } else {
+                    // Error al mover el archivo
+                    return array("respuesta" =>-1, "mensaje" => "Error al mover la imagen al directorio de destino.");
+                }
+            } else {
+               return array("respuesta" => -1,"mensaje" => "Error en la subida del archivo. Código de error: " . $archivo['error']);
+            }
+        } else {
+           return array("respuesta" => -1, "mensaje" => "No se encontró ninguna imagen en la petición (campo 'foto').");
         }
     }
 

@@ -14,11 +14,7 @@ return [
     ],
 
     'PUT' => [
-        '/caja/{id}' => [
-            'endpoint' => 'ArticuloUpdate',
-            'action'   => 'update',
-            'auth'     => 'required',
-        ],
+        '/cajaMontoInicial/{id}' => [  'endpoint' => 'cajaApi',   'action'   => 'cajaMontoInicial',   'auth'     => 'required', ],
     ],
 
     'DELETE' => [

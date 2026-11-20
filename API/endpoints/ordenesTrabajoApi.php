@@ -25,6 +25,7 @@ class ordenesTrabajoApi extends ApiEndpoint
 
     public function listarOrdenes(array $params): array
     {
+
         $fecha = date('Y-m-d');
         $placa = '';
 
@@ -33,7 +34,48 @@ class ordenesTrabajoApi extends ApiEndpoint
 
         $tokenData = $this->requireUser();
         $params = array_merge($params, $tokenData);
-        return $this->ordenT->lista_ordenes_trabajo($params['id_empresa'],$fecha,$placa);
+        return $this->ordenT->lista_ordenes_trabajo($params['id_empresa'],'F',$fecha,$placa);
+
+    }
+
+    public function listarOrdenes_finalizadas(array $params): array
+    {
+
+        $fecha = date('Y-m-d');
+        $placa = '';
+        $estado = false;
+
+        if(isset($params['fecha']) && $params['fecha']!=''){ $fecha = $params['fecha']; }
+        if(isset($params['placa']) && $params['placa']!=''){ $placa = $params['placa']; }
+        if(isset($params['estado']) && $params['estado']!=''){ $estado = $params['estado']; }
+
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        return $this->ordenT->lista_ordenes_trabajo_all($params['id_empresa'],$estado,$fecha,$placa);
+
+    }
+
+    public function ordenesTrabajoAll(array $params): array
+    {
+
+        $fecha = date('Y-m-d');
+        $placa = '';
+        $estado = false;
+
+        if(isset($params['fecha']) && $params['fecha']!=''){ $fecha = $params['fecha']; }
+        if(isset($params['placa']) && $params['placa']!=''){ $placa = $params['placa']; }
+        if(isset($params['estado']) && $params['estado']!=''){ $estado = $params['estado']; }
+
+        $tokenData = $this->requireUser();
+        $params = array_merge($params, $tokenData);
+        $lineas = $this->ordenT->lineas_orden_trabajo($params['id_empresa'],$params['orden']);
+        $detalle = $this->ordenT->detalleExtraOrdenes($params['id_empresa'],$params['orden'],$id=false);
+        $observaciones = $this->ordenT->observacionesOrdenes($params['id_empresa'],$params['orden'],$id=false);
+        $fotos = $this->ordenT->fotosOrdenes($params['id_empresa'],$params['orden'],$id=false);
+        $orden =  $this->ordenT->lista_ordenes_trabajo_all($params['id_empresa'],false,false,false,$params['orden']);
+
+
+        return array('orden'=>$orden,'lineas'=>$lineas,'detalles'=>$detalle,'observaciones'=>$observaciones,'fotos'=>$fotos);
 
     }
 
@@ -959,8 +1001,6 @@ class ordenesTrabajoApi extends ApiEndpoint
         } else {
            return array("respuesta" => -1, "mensaje" => "No se encontró ninguna imagen en la petición (campo 'foto').");
         }
-
-
         // print_r($params);die();
     }
 }
