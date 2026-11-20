@@ -34,7 +34,7 @@ class ordenesTrabajoApi extends ApiEndpoint
 
         $tokenData = $this->requireUser();
         $params = array_merge($params, $tokenData);
-        return $this->ordenT->lista_ordenes_trabajo($params['id_empresa'],'F',$fecha,$placa);
+        return $this->ordenT->lista_ordenes_trabajo($params['id_empresa'],'F',$fecha=false,$placa);
 
     }
 
