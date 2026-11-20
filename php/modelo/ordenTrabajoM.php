@@ -30,7 +30,8 @@ class ordenTrabajoM
 		$sql = "SELECT * 
 				FROM ordenes_trabajo 
 				where id_empresa = ".$idempresa."
-				AND estado_orden <> '".$estado."'";
+				AND estado_orden <> '".$estado."'
+				AND TC = 'OR'";
 				if($fecha)
 				{
 					$sql.=" AND fecha = '".$fecha."'";
