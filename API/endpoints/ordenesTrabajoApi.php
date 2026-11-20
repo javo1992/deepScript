@@ -94,7 +94,7 @@ class ordenesTrabajoApi extends ApiEndpoint
         if($params['fecha']!=0) {$fecha = $params['fecha'];} 
 
         // print_r($params);die();
-        return $this->ordenT->detalle_ordenes_trabajo($params['id_empresa'],$id,$placa,$fecha);
+        return $this->ordenT->detalle_ordenes_trabajo($params['id_empresa'],$id,$placa,$fecha=false);
 
     }
 
