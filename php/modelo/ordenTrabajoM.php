@@ -140,7 +140,8 @@ class ordenTrabajoM
 				FROM lineas_orden_trabajo L 
 				INNER JOIN productos P ON L.referencia = P.referencia
 				INNER JOIN categoria C ON P.categoria = C.id_categoria
-				where id_orden = ".$orden." ";
+				where id_orden = ".$orden." 
+				AND P.id_empresa = '".$idempresa."'";
 				if($id)
 				{
 					$sql.=" AND id_lineas = '".$id."'";
